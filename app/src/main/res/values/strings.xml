@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">PipBoy_v1.1</string>
 
+    <string name="about_text">pip boy \n
+        вся хуйня \n
+        и т.д. \n
+        и т.п.
+    </string>
+    <string name="about_title">О программе</string>
+
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

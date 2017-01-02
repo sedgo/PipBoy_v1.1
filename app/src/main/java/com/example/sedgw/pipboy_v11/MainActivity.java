@@ -1,8 +1,10 @@
 package com.example.sedgw.pipboy_v11;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.MediaController;
@@ -27,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         videoView.setMediaController(new MediaController(this));
         videoView.requestFocus(0);
-        videoView.start();
+        //videoView.start();
+    }
+
+    public void onClickToAbout(View view) {
+        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        startActivity(intent);
     }
 }
