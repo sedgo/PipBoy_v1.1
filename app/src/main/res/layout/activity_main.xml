@@ -11,8 +11,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.sedgw.pipboy_v11.MainActivity"
     android:theme="@style/Theme.AppCompat.NoActionBar">
-
-    <ImageButton
+    <!-- Menu -->
+    <fragment
+        android:name="com.example.sedgw.pipboy_v11.Fragment_Menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+    </fragment>
+    <!-- Button and video -->
+    <!-- <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
@@ -32,5 +39,5 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginEnd="150dp" />
+        android:layout_marginEnd="150dp" /> -->
 </RelativeLayout>

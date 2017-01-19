@@ -22,18 +22,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //path for video
-        String videoSource ="http://www.sample-videos.com/video/mp4/240/big_buck_bunny_240p_1mb.mp4";
+        //String videoSource ="http://www.sample-videos.com/video/mp4/240/big_buck_bunny_240p_1mb.mp4";
 
-        VideoView videoView = (VideoView) findViewById(R.id.videoView);
-        videoView.setVideoURI(Uri.parse(videoSource));
+        //VideoView videoView = (VideoView) findViewById(R.id.videoView);
+        //videoView.setVideoURI(Uri.parse(videoSource));
 
-        videoView.setMediaController(new MediaController(this));
-        videoView.requestFocus(0);
+        //videoView.setMediaController(new MediaController(this));
+        //videoView.requestFocus(0);
         //videoView.start();
+        //Intent intent = new Intent(MainActivity.this, OSMMapsActivity.class);
+        //startActivity(intent);
     }
 
-    public void onClickToAbout(View view) {
-        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+    /*public void onClickToAbout(View view) {
+        Intent intent = new Intent(MainActivity.this, OSMMapsActivity.class);
         startActivity(intent);
-    }
+    }*/
 }
