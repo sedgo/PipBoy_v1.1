@@ -1,8 +1,10 @@
 package com.example.sedgw.pipboy_v11;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import com.google.android.gms.ads.formats.NativeAd;
 
 import org.w3c.dom.Text;
 
@@ -54,12 +58,23 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 123 && resultCode == RESULT_OK) {
             Uri selectedFile = data.getData();
-            WebView image = (WebView) findViewById(R.id.imageView);
-            image.getSettings().setLoadWithOverviewMode(true);
-            image.getSettings().setUseWideViewPort(true);
-            image.loadUrl(Uri.decode(selectedFile.toString()));
-            image.getSettings().setSupportZoom(true);
-            image.getSettings().setBuiltInZoomControls(true);
+            ImageView image = (ImageView) findViewById(R.id.imageView);
+            //image.getSettings().setLoadWithOverviewMode(true);
+            //image.getSettings().setUseWideViewPort(true);
+            image.setImageURI(selectedFile);
+
+            //image.getSettings().setBuiltInZoomControls(true); //Button of zoom
+            /* suka ne vkuril!
+            int picHeight = image.getContentHeight();
+            int height = image.getHeight();
+            float val = 1;
+            if (picHeight > height)
+                val = (float) height / (float) picHeight / 100f;
+
+            //val = val * 100f;
+            int val_int = (int) val;
+            image.setInitialScale(val_int); */
+            //image.setInitialScale(10);
 
             image.setScrollbarFadingEnabled(true);
             image.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
