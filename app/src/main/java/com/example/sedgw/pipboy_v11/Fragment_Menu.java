@@ -20,14 +20,22 @@ public class Fragment_Menu extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
-        ImageButton button = (ImageButton) view.findViewById(R.id.imageButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        ImageButton buttonMap = (ImageButton) view.findViewById(R.id.buttonMap);
+        buttonMap.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
                                           Intent intent = new Intent(getActivity(), OSMMapsActivity.class);
                                           startActivity(intent);
                                       }
                                   });
+        /* ImageButton buttonBD = (ImageButton) view.findViewById(R.id.buttonBD);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ***.class);
+                startActivity(intent);
+            }
+        }); */
         return view;
     }
 }
