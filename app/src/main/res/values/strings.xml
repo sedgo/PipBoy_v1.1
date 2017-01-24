@@ -10,5 +10,9 @@
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_maps">Map</string>
+
+
+    <!-- DB first -->
+    <string name="back_code">XXXXXXXX</string>
+    <string name="">XXXXXXXX</string>
 </resources>
