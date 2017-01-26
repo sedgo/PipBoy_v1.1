@@ -28,7 +28,9 @@ public class DBfirstActivity extends Activity {
         EditText editText = (EditText) findViewById(R.id.code);
         TextView textView = (TextView) findViewById(R.id.textView);
 
+        //hide keyboard
         editText.clearFocus();
+        //another method: getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT‌​_INPUT_STATE_ALWAYS_‌​HIDDEN);
         if (editText.getText().length() != R.integer.length_of_code) {
             textView.setText(R.string.message_not_enter_code);
         }
@@ -57,14 +59,13 @@ public class DBfirstActivity extends Activity {
 
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
-
-
                     //loading next activity of viewing item
                     Intent intent = new Intent(DBfirstActivity.this, DBmainActivity.class);
+                    intent.putExtra("code", cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_CODE)));
                     startActivity(intent);
                 }
                 else {
-                    textView.setText(R.string.message_error_select);
+                    textView.setText(R.string.message_code_not_find);
                 }
             }
             else {

@@ -18,4 +18,5 @@
     <string name="back_code">XXXXXXXX</string>
     <string name="message_not_enter_code">Вы не ввели код!</string>
     <string name="message_error_select">Ошибка чтения из базы данных, обратитесь к администратору</string>
+    <string name="message_code_not_find">Такой код не найден</string>
 </resources>
