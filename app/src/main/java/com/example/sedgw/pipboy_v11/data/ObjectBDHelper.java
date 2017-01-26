@@ -27,6 +27,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String SQL_CREATE_OBJECT_TABLE = "CREATE TABLE " + ObjectEntry.TABLE_NAME + " (" +
                 ObjectEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ObjectEntry.COLUMN_CODE + " TEXT NOT NULL, " +
                 ObjectEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 ObjectEntry.COLUMN_TYPE + " TEXT NOT NULL, " +
                 ObjectEntry.COLUMN_TITLE + " TEXT NOT NULL, " +

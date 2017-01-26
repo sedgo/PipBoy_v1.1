@@ -11,8 +11,11 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <!-- Settings -->
+    <integer name="length_of_code">8</integer>
 
     <!-- DB first -->
     <string name="back_code">XXXXXXXX</string>
-    <string name="">XXXXXXXX</string>
+    <string name="message_not_enter_code">Вы не ввели код!</string>
+    <string name="message_error_select">Ошибка чтения из базы данных, обратитесь к администратору</string>
 </resources>
