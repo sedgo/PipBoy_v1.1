@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="length_of_code">8</integer>
+    <integer name="need_to_admin">5</integer>
 </resources>

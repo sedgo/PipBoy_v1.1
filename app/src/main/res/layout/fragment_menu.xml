@@ -4,42 +4,55 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffff0000">
+    android:background="@null">
 
-    <ImageButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    app:srcCompat="@mipmap/ic_launcher"
-    android:id="@+id/buttonMap" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:src="@drawable/mytracks"
+        android:background="@null"
+        android:id="@+id/buttonMap" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/key"
+        android:background="@null"
         android:id="@+id/buttonBD" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:src="@drawable/stopwatch"
+        android:background="@null"
         android:id="@+id/buttonTimer" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:src="@drawable/bf"
+        android:background="@null"
         android:id="@+id/buttonWeather" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:src="@drawable/messaging"
+        android:background="@null"
         android:id="@+id/buttonChat" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:src="@drawable/radio"
+        android:background="@null"
         android:id="@+id/buttonRadio" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/settings"
+        android:background="@null"
+        android:id="@+id/buttonSettings" />
 </LinearLayout>

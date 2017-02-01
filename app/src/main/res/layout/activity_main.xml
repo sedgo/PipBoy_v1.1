@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -14,8 +14,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
         <Button
             android:id="@+id/buttonFileDialog"
             android:layout_width="wrap_content"
@@ -41,8 +41,8 @@
     <fragment
         android:name="com.example.sedgw.pipboy_v11.Fragment_Menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         tools:layout="@layout/fragment_menu">
     </fragment>
 
@@ -68,4 +68,4 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginEnd="150dp" /> -->
-</LinearLayout>
+</RelativeLayout>

@@ -6,5 +6,5 @@
     <color name="colorBackWindow">#4d7d770b</color>
 
     <color name="black_overlay">#66000000</color>
-    <color name="error">#ffff0000</color>
+    <color name="error">#00000000</color>
 </resources>

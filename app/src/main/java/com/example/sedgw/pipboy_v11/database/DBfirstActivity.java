@@ -1,15 +1,18 @@
-package com.example.sedgw.pipboy_v11;
+package com.example.sedgw.pipboy_v11.database;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.sedgw.pipboy_v11.R;
 import com.example.sedgw.pipboy_v11.data.MainContract.ObjectEntry;
 import com.example.sedgw.pipboy_v11.data.ObjectBDHelper;
 
@@ -33,8 +36,9 @@ public class DBfirstActivity extends Activity {
         textView.setText("");
 
         //hide keyboard
-        //another method: getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        editText.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
         if (editText.length() != getResources().getInteger(R.integer.length_of_code)) {
             textView.setText(R.string.message_not_enter_code);
         }
