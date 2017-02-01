@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class DBfirstActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_db_first);
     }
 
@@ -29,8 +31,9 @@ public class DBfirstActivity extends Activity {
         TextView textView = (TextView) findViewById(R.id.textView);
 
         //hide keyboard
-        editText.clearFocus();
-        //another method: getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT‌​_INPUT_STATE_ALWAYS_‌​HIDDEN);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //another method:  editText.clearFocus();
+
         if (editText.getText().length() != R.integer.length_of_code) {
             textView.setText(R.string.message_not_enter_code);
         }

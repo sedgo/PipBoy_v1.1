@@ -25,12 +25,13 @@
             android:hint="@string/back_code" />
 
         <Button
-            android:text="OK"
+            android:text="@string/button_text"
             android:textSize="@dimen/big_size_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/button2"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="onClickOK"/>
 
     </LinearLayout>
 
@@ -41,7 +42,6 @@
         android:layout_weight="1">
 
         <TextView
-            android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"

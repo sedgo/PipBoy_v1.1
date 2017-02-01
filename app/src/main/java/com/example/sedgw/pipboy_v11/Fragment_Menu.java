@@ -28,14 +28,14 @@ public class Fragment_Menu extends Fragment {
                                           startActivity(intent);
                                       }
                                   });
-        /* ImageButton buttonBD = (ImageButton) view.findViewById(R.id.buttonBD);
-        button.setOnClickListener(new View.OnClickListener() {
+        ImageButton buttonBD = (ImageButton) view.findViewById(R.id.buttonBD);
+        buttonBD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ***.class);
+                Intent intent = new Intent(getActivity(), DBfirstActivity.class);
                 startActivity(intent);
             }
-        }); */
+        });
         return view;
     }
 }

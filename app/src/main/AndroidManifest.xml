@@ -38,7 +38,8 @@
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
 
         <!-- Maps activity -->
         <activity
