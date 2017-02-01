@@ -26,15 +26,16 @@ public class DBfirstActivity extends Activity {
         setContentView(R.layout.activity_db_first);
     }
 
+
     public void onClickOK(View view) {
         EditText editText = (EditText) findViewById(R.id.code);
         TextView textView = (TextView) findViewById(R.id.textView);
+        textView.setText("");
 
         //hide keyboard
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        //another method:  editText.clearFocus();
-
-        if (editText.getText().length() != R.integer.length_of_code) {
+        //another method: getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        editText.clearFocus();
+        if (editText.length() != getResources().getInteger(R.integer.length_of_code)) {
             textView.setText(R.string.message_not_enter_code);
         }
         else {
@@ -46,7 +47,7 @@ public class DBfirstActivity extends Activity {
 
             //Array of column and values
             String[] select_column = { ObjectEntry._ID, ObjectEntry.COLUMN_CODE };
-            String where_expression = ObjectEntry.COLUMN_CODE + " = '?'";
+            String where_expression = ObjectEntry.COLUMN_CODE + " = ?";
             String[] where_args = { cur_code };
 
             //Execute query
@@ -61,7 +62,7 @@ public class DBfirstActivity extends Activity {
             );
 
             if (cursor != null) {
-                if (cursor.moveToFirst()) {
+                if (cursor.moveToNext()) {
                     //loading next activity of viewing item
                     Intent intent = new Intent(DBfirstActivity.this, DBmainActivity.class);
                     intent.putExtra("code", cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_CODE)));
@@ -81,5 +82,4 @@ public class DBfirstActivity extends Activity {
             dbHelper.close();
         }
     }
-
 }
