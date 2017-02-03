@@ -72,6 +72,16 @@
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme">
         </activity>
+        <activity
+            android:name=".admin.AdminListActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme">
+        </activity>
+        <activity
+            android:name=".admin.AdminSettingsActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme">
+        </activity>
 
         <!-- Settings activity -->
         <activity
