@@ -19,6 +19,9 @@ public class MainContract {
         public final static String COLUMN_NAME = "name";
         public final static String COLUMN_TYPE = "type";
         public final static String COLUMN_TITLE = "title";
+        public final static String COLUMN_LAT = "lat";
+        public final static String COLUMN_LON = "lat";
+        public final static String COLUMN_MESSAGE = "message";
         public final static String COLUMN_PATH_TO_VIDEO = "path_to_video";
         public final static String COLUMN_PATH_TO_IMAGE = "path_to_image";
         public final static String COLUMN_PATH_TO_SOUND = "path_to_sound";

@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="big_size_text">80sp</dimen>
     <dimen name="medium_size_text">50sp</dimen>
+    <dimen name="activity_admin_main_horizontal_margin">200dp</dimen>
+    <dimen name="activity_admin_main_vertical_margin">80dp</dimen>
+    <dimen name="admin_horizontal_padding">8dp</dimen>
 </resources>

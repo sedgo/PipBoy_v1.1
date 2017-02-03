@@ -31,6 +31,9 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
                 ObjectEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 ObjectEntry.COLUMN_TYPE + " TEXT NOT NULL, " +
                 ObjectEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                ObjectEntry.COLUMN_LAT + " REAL, " +
+                ObjectEntry.COLUMN_LON + " REAL, " +
+                ObjectEntry.COLUMN_MESSAGE + " TEXT, " +
                 ObjectEntry.COLUMN_PATH_TO_VIDEO + " TEXT NOT NULL, " +
                 ObjectEntry.COLUMN_PATH_TO_IMAGE + " TEXT NOT NULL, " +
                 ObjectEntry.COLUMN_PATH_TO_SOUND + " TEXT NOT NULL)";

@@ -28,6 +28,7 @@
         <ImageButton
             android:id="@+id/button_OK"
             android:src="@drawable/gtasks"
+            android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

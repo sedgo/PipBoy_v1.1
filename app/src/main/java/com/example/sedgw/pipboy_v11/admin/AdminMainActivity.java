@@ -1,6 +1,7 @@
 package com.example.sedgw.pipboy_v11.admin;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,5 +23,15 @@ public class AdminMainActivity extends Activity {
 
     public void onClickBack(View view) {
         finish();
+    }
+
+    public void onClickDB(View view) {
+        Intent intent = new Intent(this, AdminListActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickSettings(View view) {
+        Intent intent = new Intent(this, AdminSettingsActivity.class);
+        startActivity(intent);
     }
 }

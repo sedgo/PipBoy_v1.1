@@ -3,26 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!-- add new item panel -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-
-        </RelativeLayout>
-        <!-- list of objects -->
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-
-        </ListView>
-    </LinearLayout>
     <Button
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
@@ -31,5 +11,101 @@
         android:background="@null"
         android:layout_centerInParent="true"
         android:onClick="onClickBack"/>
+    <EditText
+        android:id="@+id/edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:visibility="invisible"
+        android:background="@drawable/folderopenback"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- add new item panel -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/folderopenback"
+            android:padding="@dimen/admin_horizontal_padding">
+
+            <EditText
+                android:id="@+id/edit_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/appfunc_clear_selected"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_code"
+                android:background="@drawable/appfunc_clear_selected"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/activity_horizontal_margin" />
+            <ImageButton
+                android:id="@+id/button_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/meno"
+                android:background="@null"
+                android:onClick="onClickTitle"/>
+            <ImageButton
+                android:id="@+id/button_coor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/marker"
+                android:background="@null"
+                android:onClick="onClickCoor"/>
+            <ImageButton
+                android:id="@+id/button_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/film"
+                android:background="@null"
+                android:onClick="onClickVideo"/>
+            <ImageButton
+                android:id="@+id/button_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/trackid"
+                android:background="@null"
+                android:onClick="onClickAudio"/>
+            <ImageButton
+                android:id="@+id/button_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/gallery"
+                android:background="@null"
+                android:onClick="onClickImage"/>
+
+
+        </RelativeLayout>
+        <!-- list of objects -->
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/folderopenback">
+
+
+        </ListView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:layout_centerInParent="true"
+        android:onClick="onClickBack"/>
+
 
 </RelativeLayout>
