@@ -2,30 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sedgw.pipboy_v11">
 
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AllTheme"
-        android:name="android.support.multidex.MultiDexApplication">
+        android:theme="@style/AllTheme">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape">
@@ -38,62 +38,59 @@
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity>
+            android:theme="@style/AllTheme"></activity>
 
         <!-- Maps activity -->
         <activity
             android:name=".OSMMapsActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity>
+            android:theme="@style/AllTheme"></activity>
 
         <!-- Activity for working with DB -->
         <activity
             android:name=".database.DBfirstActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity>
+            android:theme="@style/AllTheme"></activity>
         <activity
             android:name=".database.DBmainActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity>
+            android:theme="@style/AllTheme"></activity>
         <activity
             android:name=".database.DBviewActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity>
-
+            android:theme="@style/AllTheme"></activity>
 
         <!-- Activity for admin -->
         <activity
             android:name=".admin.AdminMainActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity>
+            android:theme="@style/AllTheme"></activity>
         <activity
             android:name=".admin.AdminListActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity>
+            android:theme="@style/AllTheme"></activity>
         <activity
             android:name=".admin.AdminSettingsActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity>
+            android:theme="@style/AllTheme"></activity>
 
         <!-- Settings activity -->
         <activity
             android:name=".SettingsActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AllTheme">
-        </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+            android:theme="@style/AllTheme"></activity>
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <service
+            android:name=".MyLocationService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
