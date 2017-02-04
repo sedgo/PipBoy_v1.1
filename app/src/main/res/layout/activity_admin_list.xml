@@ -3,23 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@null"
-        android:layout_centerInParent="true"
-        android:onClick="onClickBack"/>
-    <EditText
-        android:id="@+id/edit_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:visibility="invisible"
-        android:background="@drawable/folderopenback"/>
-
     <LinearLayout
+        android:id="@+id/rightLL"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!-- add new item panel -->
@@ -49,6 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_below="@+id/edit_name"
+                android:layout_toLeftOf="@+id/button_coor"
                 android:src="@drawable/meno"
                 android:background="@null"
                 android:onClick="onClickTitle"/>
@@ -56,7 +43,9 @@
                 android:id="@+id/button_coor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/edit_name"
                 android:src="@drawable/marker"
                 android:background="@null"
                 android:onClick="onClickCoor"/>
@@ -64,7 +53,9 @@
                 android:id="@+id/button_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_toLeftOf="@+id/button_audio"
+                android:layout_below="@+id/button_title"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:src="@drawable/film"
                 android:background="@null"
                 android:onClick="onClickVideo"/>
@@ -72,15 +63,31 @@
                 android:id="@+id/button_audio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/button_coor"
                 android:src="@drawable/trackid"
                 android:background="@null"
                 android:onClick="onClickAudio"/>
             <ImageButton
+                android:id="@+id/button_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/button_coor"
+                android:layout_below="@id/edit_name"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:src="@drawable/messaging2"
+                android:background="@null"
+                android:onClick="onClickMessage"/>
+            <ImageButton
                 android:id="@+id/button_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_below="@id/button_message"
+                android:layout_toRightOf="@id/button_audio"
                 android:src="@drawable/gallery"
                 android:background="@null"
                 android:onClick="onClickImage"/>
@@ -89,6 +96,7 @@
         </RelativeLayout>
         <!-- list of objects -->
         <ListView
+            android:id="@+id/leftLV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -98,6 +106,30 @@
         </ListView>
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/button_title_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@null"
+        android:src="@drawable/d_add"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:onClick="onClickTitleOK"/>
+    <ImageButton
+        android:id="@+id/button_title_erase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@null"
+        android:src="@drawable/trashcan"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:onClick="onClickTitleErase"/>
     <Button
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
