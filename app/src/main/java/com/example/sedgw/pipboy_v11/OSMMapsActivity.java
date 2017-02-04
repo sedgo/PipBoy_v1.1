@@ -5,10 +5,15 @@ package com.example.sedgw.pipboy_v11;
  */
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -22,6 +27,9 @@ public class OSMMapsActivity extends Activity {
 
     public MapView map;
     public IMapController mapController;
+
+    private static double currentLat =0;
+    private static double currentLon =0;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +56,26 @@ public class OSMMapsActivity extends Activity {
         myLocationOverlay.enableMyLocation();
         myLocationOverlay.enableFollowLocation();
 
-        //startService(new Intent(this, MyLocationService.class));
+
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                currentLat = location.getLatitude();
+                currentLon = location.getLongitude();
+                Toast.makeText(getBaseContext(),currentLat+"-"+currentLon, Toast.LENGTH_SHORT).show();
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+        startService(new Intent(this, MyLocationService.class));
+
 
     }
 

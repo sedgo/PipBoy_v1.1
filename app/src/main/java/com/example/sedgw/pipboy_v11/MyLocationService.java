@@ -36,7 +36,7 @@ public class MyLocationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         addListenerLocation();
-        Toast.makeText(this, "MyLocationService выполнил команду", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "MyLocationService выполнил команду", Toast.LENGTH_LONG).show();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -52,6 +52,7 @@ public class MyLocationService extends Service {
             }
 
             @Override
+
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
 
@@ -62,6 +63,7 @@ public class MyLocationService extends Service {
                 if(lastKnownLocation!=null){
                     currentLat = lastKnownLocation.getLatitude();
                     currentLon = lastKnownLocation.getLongitude();
+                    Toast.makeText(getBaseContext(),currentLat+"-"+currentLon, Toast.LENGTH_SHORT).show();
                 }
             }
 
