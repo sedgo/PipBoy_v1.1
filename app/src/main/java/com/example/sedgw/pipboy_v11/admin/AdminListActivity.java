@@ -32,12 +32,6 @@ public class AdminListActivity extends Activity {
 
     private Integer coorLat = 0;
     private Integer coorLon = 0;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,16 +100,14 @@ public class AdminListActivity extends Activity {
     }
 
     public void onClickTitle(View view) {
-        LinearLayout rightLL = (LinearLayout) findViewById(R.id.rightLL);
-        rightLL.setVisibility(View.INVISIBLE);
-        ListView leftLV = (ListView) findViewById(R.id.leftLV);
-        leftLV.setVisibility(View.INVISIBLE);
+        LinearLayout ll = (LinearLayout) findViewById(R.id.LL);
+        ll.setVisibility(View.INVISIBLE);
         EditText edit_title = (EditText) findViewById(R.id.edit_title);
         edit_title.setVisibility(View.VISIBLE);
         ImageButton button_title_erase = (ImageButton) findViewById(R.id.button_title_erase);
-        edit_title.setVisibility(View.VISIBLE);
+        button_title_erase.setVisibility(View.VISIBLE);
         ImageButton button_title_ok = (ImageButton) findViewById(R.id.button_title_ok);
-        edit_title.setVisibility(View.VISIBLE);
+        button_title_ok.setVisibility(View.VISIBLE);
     }
 
     public void onClickMessage(View view) {
@@ -130,9 +122,21 @@ public class AdminListActivity extends Activity {
         EditText edit_title = (EditText) findViewById(R.id.edit_title);
         edit_title.setVisibility(View.INVISIBLE);
         ImageButton button_title_erase = (ImageButton) findViewById(R.id.button_title_erase);
-        edit_title.setVisibility(View.INVISIBLE);
+        button_title_erase.setVisibility(View.INVISIBLE);
         ImageButton button_title_ok = (ImageButton) findViewById(R.id.button_title_ok);
-        edit_title.setVisibility(View.INVISIBLE);
+        button_title_ok.setVisibility(View.INVISIBLE);
+        LinearLayout ll = (LinearLayout) findViewById(R.id.LL);
+        ll.setVisibility(View.VISIBLE);
         title = edit_title.getText().toString();
+    }
+
+    public void onClickDelete(View view) {
+
+    }
+
+    public void onClickAdd(View view) {
+    }
+
+    public void onClickView(View view) {
     }
 }

@@ -20,5 +20,6 @@
 
     <!-- Admin list -->
     <string name="admin_alert_error_reqcode">Ошибка. Неверный request code</string>
-
+    <string name="admin_code">Код</string>
+    <string name="admin_name">Заголовок</string>
 </resources>

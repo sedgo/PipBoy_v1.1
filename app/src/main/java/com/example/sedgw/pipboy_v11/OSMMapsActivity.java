@@ -14,12 +14,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.view.WindowManager;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
@@ -29,6 +31,7 @@ import java.util.logging.ErrorManager;
 
 public class OSMMapsActivity extends Activity {
 
+    private MyLocationNewOverlay mLocationOverlay;
     private LocationManager locationManager;
     private MapView map;
     private IMapController mapController;
@@ -51,78 +54,19 @@ public class OSMMapsActivity extends Activity {
         mapController = map.getController();
         mapController.setZoom(16);
         map.setMinZoomLevel(12);
-        map.setMaxZoomLevel(18);
+        map.setMaxZoomLevel(17);
 
         //map.setScrollableAreaLimitDouble();
 
-        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(map);
-        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(context),map);
         mLocationOverlay.enableMyLocation();
-        map.getOverlays().add(mLocationOverlay);
+        map.getOverlays().add(this.mLocationOverlay);
 
-        map.setScrollableAreaLimitDouble(new BoundingBox(54.0,114.0,52.0,112.0));
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mapController.animateTo(new GeoPoint(52.02,113.2));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000 * 5, 10, locationListener);
-        }
-        else {
-            //обработка ошибки доступа
-        }
+    public void onClickBack(View view) {
+        finish();
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-
-            locationManager.removeUpdates(locationListener);
-        }
-        else {
-            //обработка ошибки доступа
-        }
-    }
-
-    private LocationListener locationListener = new LocationListener() {
-
-        @Override
-        public void onLocationChanged(Location location) {
-            showLocation(location);
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            if ( ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-
-                showLocation(locationManager.getLastKnownLocation(provider));
-            }
-            else {
-                //обработка ошибки доступа
-            }
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
-    };
-
-    private void showLocation(Location location) {
-        if (location == null)
-            return;
-        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-            mapController.animateTo(new GeoPoint(location.getLatitude(),location.getLongitude()));
-        }
-    }
-
 }
 

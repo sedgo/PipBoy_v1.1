@@ -7,4 +7,9 @@
     <dimen name="activity_admin_main_horizontal_margin">200dp</dimen>
     <dimen name="activity_admin_main_vertical_margin">80dp</dimen>
     <dimen name="admin_horizontal_padding">8dp</dimen>
+    <dimen name="admin_width_edit">240dp</dimen>
+    <dimen name="admin_height_rgroup">170dp</dimen>
+    <dimen name="admin_width_rgroup">90dp</dimen>
+    <dimen name="admin_title_button">30dp</dimen>
+
 </resources>
