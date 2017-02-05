@@ -60,6 +60,10 @@ public class ActivityCheckNavigation extends Activity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000 * 10, 10, locationListener);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000 * 10, 10, locationListener);
         checkEnabled();
+        if (locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null)
+            tvLocationGPS.setText(formatLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)));
+        if (locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) != null)
+            tvLocationNet.setText(formatLocation(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)));
     }
 
     @Override

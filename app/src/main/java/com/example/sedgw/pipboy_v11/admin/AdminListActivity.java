@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.sedgw.pipboy_v11.OSMMapsActivity;
 import com.example.sedgw.pipboy_v11.R;
 
 /**
@@ -30,8 +31,13 @@ public class AdminListActivity extends Activity {
     private Uri audioProvider;
     private Uri imageProvider;
 
-    private Integer coorLat = 0;
-    private Integer coorLon = 0;
+    private Double coorLat = 0d;
+    private Double coorLon = 0d;
+
+    static final private int GET_IMAGE = 100;
+    static final private int GET_AUDIO = 101;
+    static final private int GET_VIDEO = 102;
+    static final private int GET_COOR = 103;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,7 @@ public class AdminListActivity extends Activity {
                 .setType("*/*")
                 .setAction(Intent.ACTION_GET_CONTENT);
 
-        startActivityForResult(Intent.createChooser(intent, "Select a file"), 100);
+        startActivityForResult(Intent.createChooser(intent, "Select a file"), GET_IMAGE);
     }
 
     public void onClickAudio(View view) {
@@ -63,7 +69,7 @@ public class AdminListActivity extends Activity {
                 .setType("*/*")
                 .setAction(Intent.ACTION_GET_CONTENT);
 
-        startActivityForResult(Intent.createChooser(intent, "Select a file"), 101);
+        startActivityForResult(Intent.createChooser(intent, "Select a file"), GET_AUDIO);
     }
 
     public void onClickVideo(View view) {
@@ -71,7 +77,7 @@ public class AdminListActivity extends Activity {
                 .setType("*/*")
                 .setAction(Intent.ACTION_GET_CONTENT);
 
-        startActivityForResult(Intent.createChooser(intent, "Select a file"), 102);
+        startActivityForResult(Intent.createChooser(intent, "Select a file"), GET_VIDEO);
     }
 
     @Override
@@ -80,14 +86,19 @@ public class AdminListActivity extends Activity {
         if (resultCode == RESULT_OK) {
             Uri selectedFile = data.getData();
             switch (requestCode) {
-                case 100:
+                case GET_IMAGE:
                     imageProvider = selectedFile;
                     break;
-                case 101:
+                case GET_AUDIO:
                     audioProvider = selectedFile;
                     break;
-                case 102:
+                case GET_VIDEO:
                     videoProvider = selectedFile;
+                    break;
+                case GET_COOR:
+                    coorLat = Double.parseDouble(data.getExtras().get("LAT").toString());
+                    coorLon = Double.parseDouble(data.getExtras().get("LON").toString());
+                    Toast.makeText(getApplicationContext(), coorLat + " " + coorLon, Toast.LENGTH_LONG).show();
                     break;
                 default:
                     alert(getResources().getString(R.string.admin_alert_error_reqcode));
@@ -97,6 +108,8 @@ public class AdminListActivity extends Activity {
     }
 
     public void onClickCoor(View view) {
+        Intent intent = new Intent(this, OSMMapsActivity.class);
+        startActivityForResult(intent, GET_COOR);
     }
 
     public void onClickTitle(View view) {

@@ -14,8 +14,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Dimension;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -23,30 +24,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.MapEventsOverlay;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.MinimapOverlay;
-import org.osmdroid.views.overlay.compass.CompassOverlay;
-import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
-import org.osmdroid.views.overlay.gestures.RotationGestureDetector;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+import org.osmdroid.views.overlay.infowindow.InfoWindow;
 
-import java.util.Date;
+import java.util.ArrayList;
 
-public class OSMMapsActivity extends Activity {
+public class OSMMapsActivity extends Activity implements MapEventsReceiver{
 
+    public Integer radius_marker = 5;
     public MapView map;
     public IMapController mapController;
     public MinimapOverlay minimapOverlay;
     public LocationManager locationManager;
-    public Integer widthMiniMap = 100;
-    public Integer heightMiniMap = 100;
+    public Marker navMarker;
+    public Marker selectedMarker;
 
-    private static double currentLat =0;
-    private static double currentLon =0;
+    public double currentLat = 0;
+    public double currentLon = 0;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,21 +69,25 @@ public class OSMMapsActivity extends Activity {
         //blocking borders of loading maps
         //map.setScrollableAreaLimitDouble(new BoundingBox(54.0,114.0,52.0,112.0));
 
-        //Navigation by osmmaps - not worked (why? i don't khow!)
+        //Navigation by osmmaps - not worked (why? i don't khow!) maybe gps not working on my phone
         /* MyLocationNewOverlay myLocationOverlay = new MyLocationNewOverlay(map);
         map.getOverlays().add(myLocationOverlay);
         myLocationOverlay.enableMyLocation();
         myLocationOverlay.enableFollowLocation(); */
 
         minimapOverlay = new MinimapOverlay(getApplicationContext(), map.getTileRequestCompleteHandler());
-        minimapOverlay.setWidth(widthMiniMap);
-        minimapOverlay.setHeight(heightMiniMap);
         minimapOverlay.setZoomDifference(5);
         minimapOverlay.setOptionsMenuEnabled(true);
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
-        minimapOverlay.setPadding(size.y - heightMiniMap);
+        minimapOverlay.setHeight(size.y / 3);
+        minimapOverlay.setWidth(size.y / 3);
         map.getOverlays().add(minimapOverlay);
+        map.setBackgroundResource(R.drawable.bg_h);
+
+        navMarker = new Marker(map);
+        MapEventsOverlay mapEventsOverlay = new MapEventsOverlay(this);
+        map.getOverlays().add(0, mapEventsOverlay);
 
         //check for SDK (with marshmallow android i need to use checkPermission fuck)
         if ( Build.VERSION.SDK_INT >= 23 &&
@@ -95,6 +99,29 @@ public class OSMMapsActivity extends Activity {
 
         //start service for navigation
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+    }
+
+    @Override
+    public boolean singleTapConfirmedHelper(GeoPoint p) {
+        map.getOverlays().remove(selectedMarker);
+        selectedMarker = new Marker(map);
+        selectedMarker.setPosition(p);
+        selectedMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        selectedMarker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.marker_tap, null));
+        selectedMarker.setTitle(getResources().getString(R.string.tap_text) + p.getLatitude() + "\r\n" + p.getLongitude() );
+        map.getOverlays().add(selectedMarker);
+        InfoWindow.closeAllInfoWindowsOn(map);
+        map.invalidate();
+        Intent answerIntent = new Intent();
+        answerIntent.putExtra("LAT", p.getLatitude());
+        answerIntent.putExtra("LON", p.getLongitude());
+        setResult(RESULT_OK, answerIntent);
+        return true;
+    }
+
+    @Override
+    public boolean longPressHelper(GeoPoint p) {
+        return false;
     }
 
     @Override
@@ -142,21 +169,30 @@ public class OSMMapsActivity extends Activity {
 
     private void showLocation(Location location) {
         if (location == null) {
-            Toast.makeText(getApplicationContext(), location. + " " + getResources().getString(R.string.error_show_location), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_show_location), Toast.LENGTH_SHORT).show();
             return;
         }
-        mapController.animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
+        GeoPoint p = new GeoPoint(location.getLatitude(), location.getLongitude());
+        map.getOverlays().remove(navMarker);
+        mapController.animateTo(p);
+        navMarker.setPosition(p);
+        navMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        navMarker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.appfunc_screennow, null));
+        navMarker.setTitle(getResources().getString(R.string.tap_nav));
+        map.getOverlays().add(navMarker);
+        map.invalidate();
         TextView coord = (TextView) findViewById(R.id.textview_coordinates);
         coord.setText(formatLocation(location));
     }
 
     public void toLocation() {
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            showLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            showLocation(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
         }
-        else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        /*else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             showLocation(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-        }
+        }*/
         else Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_get_provider), Toast.LENGTH_LONG).show();
     }
 

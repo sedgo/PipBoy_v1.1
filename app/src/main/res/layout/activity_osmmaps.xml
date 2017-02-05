@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:src="@drawable/alert"
         android:background="@null"
         android:onClick="onClickLocation"/>

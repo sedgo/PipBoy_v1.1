@@ -18,6 +18,8 @@
     <string name="maps_coordiantes">не найдены координаты</string>
     <string name="error_show_location">Ошибка! Не найдена локация!</string>
     <string name="error_get_provider">Ошибка! Отключена навигация!</string>
+    <string name="tap_text">Вы выбрали:\r\n</string>
+    <string name="tap_nav">Вы</string>
 
     <!-- DB first -->
     <string name="back_code">XXXXXXXX</string>
