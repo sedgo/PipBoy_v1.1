@@ -11,6 +11,14 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <string name="YES">да</string>
+    <string name="NO">нет</string>
+
+    <!-- Maps -->
+    <string name="maps_coordiantes">не найдены координаты</string>
+    <string name="error_show_location">Ошибка! Не найдена локация!</string>
+    <string name="error_get_provider">Ошибка! Отключена навигация!</string>
+
     <!-- DB first -->
     <string name="back_code">XXXXXXXX</string>
     <string name="message_not_enter_code">Вы не ввели код!</string>
@@ -22,4 +30,18 @@
     <string name="admin_alert_error_reqcode">Ошибка. Неверный request code</string>
     <string name="admin_code">Код</string>
     <string name="admin_name">Заголовок</string>
+
+    <!-- Settings -->
+    <string name="settings_check_navigation">Навигация</string>
+
+    <!-- Check navigation -->
+    <string name="nav_coordinates">Координаты</string>
+    <string name="nav_coordinates_notfind">Координаты:\r\nНе обнаружены!</string>
+    <string name="nav_enabled">Включён?</string>
+    <string name="nav_status">Состояние</string>
+    <string name="nav_time">время</string>
+    <string name="nav_provider_gps">GPS</string>
+    <string name="nav_provider_network">Network</string>
+    <string name="nav_location_settings">Настройки навигации</string>
+    <string name="nav_error_sdk">Ошибка! Не совместимо с текущей sdk!</string>
 </resources>

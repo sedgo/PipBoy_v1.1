@@ -79,6 +79,10 @@
             android:name=".SettingsActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"></activity>
+        <activity
+            android:name=".ActivityCheckNavigation"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme"></activity>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

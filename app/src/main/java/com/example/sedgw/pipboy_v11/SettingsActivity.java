@@ -40,4 +40,9 @@ public class SettingsActivity extends Activity {
     public void onClickBack(View view) {
         finish();
     }
+
+    public void onClickNavigation(View view) {
+        Intent intent = new Intent(this, ActivityCheckNavigation.class);
+        startActivity(intent);
+    }
 }

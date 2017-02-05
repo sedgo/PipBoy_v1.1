@@ -24,4 +24,21 @@
         android:layout_centerInParent="true"
         android:onClick="onClickBack"/>
 
+    <TextView
+        android:id="@+id/textview_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/admin_title_button"
+        android:text="@string/settings_check_navigation"
+        android:textSize="@dimen/small_size_text"/>
+    <ImageButton
+        android:id="@+id/button_navigation"
+        android:layout_toRightOf="@+id/textview_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/compass"
+        android:background="@null"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:onClick="onClickNavigation"/>
+
 </RelativeLayout>
