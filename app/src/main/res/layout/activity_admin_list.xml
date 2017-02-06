@@ -154,7 +154,7 @@
                     android:layout_centerInParent="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/gallery"
+                    android:src="@drawable/aye"
                     android:background="@null"
                     android:onClick="onClickView"/>
                 <ImageButton
@@ -164,7 +164,7 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:layout_toLeftOf="@+id/button_view"
-                    android:src="@drawable/gallery"
+                    android:src="@drawable/d_add"
                     android:background="@null"
                     android:onClick="onClickAdd"/>
                 <ImageButton
@@ -174,7 +174,7 @@
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:layout_toRightOf="@+id/button_view"
-                    android:src="@drawable/gallery"
+                    android:src="@drawable/systemappremover"
                     android:background="@null"
                     android:onClick="onClickDelete"/>
 
@@ -185,7 +185,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/folderopenback"
-                android:layout_weight="3">
+                android:layout_weight="3"
+                android:padding="@dimen/activity_horizontal_margin">
 
             </ListView>
 

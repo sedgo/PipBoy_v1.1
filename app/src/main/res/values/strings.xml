@@ -21,17 +21,30 @@
     <string name="tap_text">Вы выбрали:\r\n</string>
     <string name="tap_nav">Вы</string>
 
+    <!-- DB -->
+    <string name="message_error_select">Ошибка чтения из базы данных, обратитесь к администратору</string>
+    <string name="message_code_not_find">Код не найден</string>
+    <string name="message_type_not_find">Ошибка! Такой тип объекта не найден</string>
+    <string name="message_not_check_item">Сначала выберите объект из списка!</string>
+    <string name="message_type_not_checked">Не выбран объект!</string>
+    <string name="message_error_on_insert">Ошибка при добавление нового элемента!</string>
+    <string name="message_success_insert">Элемент добавлен!</string>
+
     <!-- DB first -->
     <string name="back_code">XXXXXXXX</string>
     <string name="message_not_enter_code">Вы не ввели код!</string>
-    <string name="message_error_select">Ошибка чтения из базы данных, обратитесь к администратору</string>
-    <string name="message_code_not_find">Код не найден</string>
     <string name="button_text">ОК</string>
 
     <!-- Admin list -->
     <string name="admin_alert_error_reqcode">Ошибка. Неверный request code</string>
     <string name="admin_code">Код</string>
     <string name="admin_name">Заголовок</string>
+    <string name="error_lenght_code">Введите корректный код!</string>
+    <string name="error_name_null">Введите имя!</string>
+    <string name="empty_array_list">Список элементов пуст</string>
+    <string name="empty_image">Не выбрано изображение!</string>
+    <string name="empty_video">Не выбрано видео!</string>
+    <string name="empty_audio">Не выбрано аудио!</string>
 
     <!-- Settings -->
     <string name="settings_check_navigation">Навигация</string>
