@@ -1,15 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
-        android:text="МАКС ЛОШОК!"
-        android:textSize="@dimen/big_size_text"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/city_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/weather_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="90sp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/details_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/current_temperature_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="50sp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/pressure_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/humidity_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/wind_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/updated_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="10sp"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
