@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,17 +8,123 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <LinearLayout
+    <VideoView
+        android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+    <ImageButton
+        android:id="@+id/button_back_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickBackVideo"
+        android:src="@drawable/down"
+        android:visibility="invisible"
+        android:layout_alignParentRight="true"
+        android:background="@null"/>
 
-    </LinearLayout>
     <LinearLayout
+        android:id="@+id/infPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/folderopenback"
+            android:padding="@dimen/activity_vertical_margin">
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black">
+            </ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="2.5">
+                <ImageButton
+                    android:id="@+id/button_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="onClickVideo"
+                    android:src="@drawable/film"
+                    android:layout_weight="1"
+                    android:background="@null"/>
+                <ImageButton
+                    android:id="@+id/button_audio"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="onClickAudio"
+                    android:longClickable="true"
+                    android:src="@drawable/music"
+                    android:layout_weight="1"
+                    android:background="@null"/>
+                <ImageButton
+                    android:id="@+id/button_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="onClickMap"
+                    android:src="@drawable/marker"
+                    android:layout_weight="1"
+                    android:background="@null"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/folderopenback"
+            android:padding="@dimen/activity_vertical_margin">
+            <TextView
+                android:id="@+id/code_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4.5"
+                android:textAlignment="center"
+                android:background="@drawable/appfunc_rename"
+                android:hint="@string/back_code"
+                android:textSize="@dimen/small_size_text"/>
+            <TextView
+                android:id="@+id/name_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/admin_name"
+                android:layout_weight="4.5"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:background="@drawable/appfunc_rename"
+                android:textSize="@dimen/small_size_text"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/folderopenback"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:padding="@dimen/activity_horizontal_margin">
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/small_size_text"/>
+            </ScrollView>
 
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:layout_centerInParent="true"
+        android:onClick="onClickBack"/>
+
+</RelativeLayout>
