@@ -46,6 +46,14 @@ public class Fragment_Menu extends Fragment {
                 startActivity(intent);
             }
         });
+        ImageButton buttonWeather = (ImageButton) view.findViewById(R.id.buttonWeather);
+        buttonWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 }

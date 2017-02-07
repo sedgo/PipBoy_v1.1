@@ -35,6 +35,9 @@
     <string name="message_not_enter_code">Вы не ввели код!</string>
     <string name="button_text">ОК</string>
 
+    <!-- DB view -->
+    <string name="error_audio_play">Ошибка при запуске аудиофайла!</string>
+
     <!-- Admin list -->
     <string name="admin_alert_error_reqcode">Ошибка. Неверный request code</string>
     <string name="admin_code">Код</string>

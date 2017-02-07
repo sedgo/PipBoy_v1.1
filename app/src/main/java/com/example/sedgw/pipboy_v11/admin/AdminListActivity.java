@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -285,7 +286,10 @@ public class AdminListActivity extends Activity {
                 R.layout.list_item, new String[]{CODE, NAME, TYPE},
                 new int[]{R.id.code_text, R.id.name_text, R.id.type});
 
-        if (adapter.isEmpty()) Toast.makeText(this, R.string.empty_array_list, Toast.LENGTH_LONG).show();
+        if (adapter.isEmpty()) {
+            Toast.makeText(this, R.string.empty_array_list, Toast.LENGTH_LONG).show();
+            listView.setAdapter(null);
+        }
         else listView.setAdapter(adapter);
         listView.setOnItemClickListener(itemClickListener);
     }
@@ -342,7 +346,7 @@ public class AdminListActivity extends Activity {
                     null,
                     null
             );
-            if ( cursor != null || cursor.moveToNext() ) {
+            if ( cursor != null && cursor.moveToNext() ) {
                 Toast.makeText(this, R.string.error_lenght_code, Toast.LENGTH_LONG).show();
                 cursor.close();
                 return;
@@ -420,6 +424,7 @@ public class AdminListActivity extends Activity {
             return;
         }
         Intent intent = new Intent(this, DBviewActivity.class);
+        intent.putExtra("code", curCodeForView);
         startActivity(intent);
     }
 }

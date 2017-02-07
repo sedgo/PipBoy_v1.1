@@ -31,18 +31,6 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_main);
-
-        //path for video
-        //String videoSource ="http://www.sample-videos.com/video/mp4/240/big_buck_bunny_240p_1mb.mp4";
-
-        //VideoView videoView = (VideoView) findViewById(R.id.videoView);
-        //videoView.setVideoURI(Uri.parse(videoSource));
-
-        //videoView.setMediaController(new MediaController(this));
-        //videoView.requestFocus(0);
-        //videoView.start();
-        //Intent intent = new Intent(MainActivity.this, OSMMapsActivity.class);
-        //startActivity(intent);
     }
 
     public void onClickFileDialog(View view) {

@@ -48,7 +48,7 @@ public class DBviewActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        audioPlayer.release();
+        if (audioPlayer.equals(null)) audioPlayer.release();
     }
 
     @Override
