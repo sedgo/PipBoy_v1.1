@@ -42,19 +42,6 @@ public class WeatherActivity extends Activity {
         weatherIcon = (TextView)findViewById(R.id.weather_icon);
         weatherIcon.setTypeface(weatherFont);
 
-        asyncTask = new WeatherFunction.placeIdTask(new WeatherFunction.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise, String weather_windspeed) {
-
-                cityField.setText(weather_city);
-                updatedField.setText(getResources().getString(R.string.weather_update) + weather_updatedOn);
-                detailsField.setText(weather_description);
-                currentTemperatureField.setText(weather_temperature + Html.fromHtml("&#xf03c"));
-                humidity_field.setText(getResources().getString(R.string.weather_humidity) + weather_humidity);
-                pressure_field.setText(getResources().getString(R.string.weather_pressure) + weather_pressure);
-                wind_field.setText(getResources().getString(R.string.weather_wind) + weather_windspeed);
-                weatherIcon.setText(Html.fromHtml(weather_iconText));
-            }
-        });
         //asyncTask.execute("52.03", "113.55"); //  asyncTask.execute("Latitude", "Longitude") сюда кароче нужно из гпса долготу широту запилить
         //asyncTask.execute("55.86", "37.66");
 
@@ -69,6 +56,19 @@ public class WeatherActivity extends Activity {
     }
 
     public void showWeather() {
+        asyncTask = new WeatherFunction.placeIdTask(new WeatherFunction.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise, String weather_windspeed) {
+
+                cityField.setText(weather_city);
+                updatedField.setText(getResources().getString(R.string.weather_update) + weather_updatedOn);
+                detailsField.setText(weather_description);
+                currentTemperatureField.setText(weather_temperature + Html.fromHtml("&#xf03c"));
+                humidity_field.setText(getResources().getString(R.string.weather_humidity) + weather_humidity);
+                pressure_field.setText(getResources().getString(R.string.weather_pressure) + weather_pressure);
+                wind_field.setText(getResources().getString(R.string.weather_wind) + weather_windspeed);
+                weatherIcon.setText(Html.fromHtml(weather_iconText));
+            }
+        });
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
@@ -97,5 +97,9 @@ public class WeatherActivity extends Activity {
 
     public void onClickBack(View view) {
         finish();
+    }
+
+    public void onClickSync(View view) {
+        showWeather();
     }
 }

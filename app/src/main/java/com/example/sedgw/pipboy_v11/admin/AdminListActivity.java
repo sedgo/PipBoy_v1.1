@@ -79,6 +79,11 @@ public class AdminListActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_admin_list);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         //openDB
         dbHelper = new ObjectBDHelper(this);

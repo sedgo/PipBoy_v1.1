@@ -84,6 +84,16 @@
 
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/button_sync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@null"
+        android:src="@drawable/sync"
+        android:onClick="onClickSync"/>
+
     <Button
         android:id="@+id/button_back"
         android:layout_width="wrap_content"

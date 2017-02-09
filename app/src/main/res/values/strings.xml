@@ -68,10 +68,9 @@
     <string name="weather_humidity">Влажность: </string>
     <string name="weather_pressure">Атм. давление: </string>
     <string name="weather_wind">Ветер: </string>
-    <string name="weather_update">время</string>
 
     <!-- work with Font -->
     <string name="error_set_font_1">Невозможно установить шрифт </string>
-    <string name="error_set_font_1"> вместо </string>
+    <string name="error_set_font_2"> вместо </string>
 
 </resources>
