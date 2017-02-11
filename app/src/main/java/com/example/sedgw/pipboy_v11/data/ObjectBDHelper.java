@@ -3,6 +3,8 @@ package com.example.sedgw.pipboy_v11.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.example.sedgw.pipboy_v11.data.MainContract.ObjectEntry;
 import com.example.sedgw.pipboy_v11.data.MainContract.SmsEntry;
 
@@ -18,7 +20,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "object.db";
 
     //Version of BD
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     public ObjectBDHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,7 +46,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
         //sms
         String SQL_CREATE_OBJECT_TABLE_SMS = "CREATE TABLE " + SmsEntry.TABLE_NAME + " (" +
                 SmsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                SmsEntry.COLUMN_FLAG_INPUT + " BOOLEAN NOT NULL, " +
+                SmsEntry.COLUMN_FLAG_INPUT + " INTEGER NOT NULL, " +
                 SmsEntry.COLUMN_NUMBER + " TEXT, " +
                 SmsEntry.COLUMN_MESSAGE + " TEXT NOT NULL, " +
                 SmsEntry.COLUMN_TIMESTAMP + " TEXT NOT NULL )";
@@ -54,5 +56,9 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        Log.w("SQLite", "UPDATE VERSION DB from version " + oldVersion + " to version " + newVersion);
+        db.execSQL("DROP TABLE IF EXISTS " + SmsEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ObjectEntry.TABLE_NAME);
+        onCreate(db);
     }
 }

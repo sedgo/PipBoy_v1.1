@@ -75,7 +75,7 @@
 
     <!-- sms -->
     <string name="new_message_title">Новое входящее сообщение</string>
-    <string name="new_message_positive">Прочитать</string>
+    <string name="new_message_positive">Перейти в сообщения</string>
     <string name="new_message_negative">Закрыть</string>
     <string name="new_message_error_on_insert">Ошибка при сохранении сообщения!</string>
 

@@ -1,10 +1,17 @@
 package com.example.sedgw.pipboy_v11.sms;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.telephony.SmsMessage;
 import android.text.format.DateFormat;
+import android.widget.Toast;
+
+import com.example.sedgw.pipboy_v11.R;
+import com.example.sedgw.pipboy_v11.data.MainContract;
+import com.example.sedgw.pipboy_v11.data.ObjectBDHelper;
 
 import java.util.Date;
 
@@ -33,12 +40,31 @@ public class SMSMonitor extends BroadcastReceiver {
                 bodyText.append(messages[i].getMessageBody());
             }
             String body = bodyText.toString();
-            Intent mIntent = new Intent(context, SmsService.class);
+
+            //open DB
+            ObjectBDHelper dbHelper = new ObjectBDHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(MainContract.SmsEntry.COLUMN_FLAG_INPUT, 1);
+            values.put(MainContract.SmsEntry.COLUMN_NUMBER, sms_from);
+            values.put(MainContract.SmsEntry.COLUMN_MESSAGE, body);
+            values.put(MainContract.SmsEntry.COLUMN_TIMESTAMP, sms_timestamp);
+            long newRowId = 0;
+            newRowId = db.insert(MainContract.ObjectEntry.TABLE_NAME, null, values);
+            if (newRowId == -1) {
+                Toast.makeText(context, context.getString(R.string.new_message_error_on_insert), Toast.LENGTH_LONG).show();
+            }
+
+            db.close();
+            dbHelper.close();
+
+            Intent mIntent = new Intent(context, ServiceDialogNewMessage.class);
+            mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mIntent.putExtra("phone_number", sms_from);
             mIntent.putExtra("sms_body", body);
-            mIntent.putExtra("sms_timestamp", sms_timestamp);
-            context.startService(mIntent);
-
+            context.startActivity(mIntent);
+            //Toast.makeText(context, "senderNum: "+ sms_from + ", message: " + body, Toast.LENGTH_LONG).show();
             abortBroadcast();
         }
     }

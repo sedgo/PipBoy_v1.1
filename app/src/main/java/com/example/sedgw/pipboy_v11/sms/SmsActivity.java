@@ -67,7 +67,7 @@ public class SmsActivity extends Activity {
                 SmsEntry.COLUMN_NUMBER,
                 SmsEntry.COLUMN_MESSAGE,
                 SmsEntry.COLUMN_TIMESTAMP};
-        String where_expression = SmsEntry.COLUMN_FLAG_INPUT + " = true";
+        String where_expression = SmsEntry.COLUMN_FLAG_INPUT + " = 1";
         //Execute query
         Cursor cursor = db.query(
                 SmsEntry.TABLE_NAME,
