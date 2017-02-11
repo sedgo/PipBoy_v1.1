@@ -73,4 +73,10 @@
     <string name="error_set_font_1">Невозможно установить шрифт </string>
     <string name="error_set_font_2"> вместо </string>
 
+    <!-- sms -->
+    <string name="new_message_title">Новое входящее сообщение</string>
+    <string name="new_message_positive">Прочитать</string>
+    <string name="new_message_negative">Закрыть</string>
+    <string name="new_message_error_on_insert">Ошибка при сохранении сообщения!</string>
+
 </resources>

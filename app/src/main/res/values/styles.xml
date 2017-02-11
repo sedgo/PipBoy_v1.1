@@ -22,6 +22,7 @@
 
     <style name="AllTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/bg_h</item>
+        <item name="android:typeface">serif</item>
     </style>
 
 </resources>

@@ -8,10 +8,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,6 +62,7 @@ public class DBviewActivity extends Activity {
             public boolean onLongClick(View v) {
                 try {
                     audioPlayer.stop();
+                    audioPlayer.prepare();
                 }
                 catch (Exception e) {
                     Toast.makeText(getApplicationContext(), R.string.error_audio_play, Toast.LENGTH_LONG).show();
@@ -103,7 +102,7 @@ public class DBviewActivity extends Activity {
                 text_name.setText(cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_NAME)));
                 text_title.setText(cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_TITLE)));
                 VideoView videoView = (VideoView) findViewById(R.id.video_view);
-                MediaPlayer audioPlayer = new MediaPlayer();//.create(this, Uri.parse( cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_PATH_TO_SOUND)) ));
+                audioPlayer = new MediaPlayer();//.create(this, Uri.parse( cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_PATH_TO_SOUND)) ));
                 ImageView imageView = (ImageView) findViewById(R.id.image_view);
                 imageView.setImageURI(Uri.parse(cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_PATH_TO_IMAGE))));
                 videoView.setVideoURI(Uri.parse( cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_PATH_TO_VIDEO)) ));
@@ -115,6 +114,7 @@ public class DBviewActivity extends Activity {
                     audioPlayer.prepare();
                 }
                 catch (Exception e) {
+                    e.printStackTrace();
                     Toast.makeText(this, R.string.error_audio_play, Toast.LENGTH_LONG).show();
                 }
             }

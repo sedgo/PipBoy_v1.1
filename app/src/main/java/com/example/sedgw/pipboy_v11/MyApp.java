@@ -10,6 +10,6 @@ public class MyApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts");
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/8267.ttf");
     }
 }

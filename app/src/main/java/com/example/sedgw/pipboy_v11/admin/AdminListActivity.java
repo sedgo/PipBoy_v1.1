@@ -3,16 +3,13 @@ package com.example.sedgw.pipboy_v11.admin;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -275,12 +272,12 @@ public class AdminListActivity extends Activity {
                 hm.put(TYPE, icon);
                 curArrayList.add(hm);
             }
+            cursor.close();
         }
         else {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.message_error_select), Toast.LENGTH_LONG).show();
         }
         //closing sql objects
-        cursor.close();
         db.close();
         return curArrayList;
     }
@@ -288,7 +285,7 @@ public class AdminListActivity extends Activity {
     public void updateListView() {
         objectsArrayList = selectAllObjects();
         SimpleAdapter adapter = new SimpleAdapter(this, objectsArrayList,
-                R.layout.list_item, new String[]{CODE, NAME, TYPE},
+                R.layout.list_item_object, new String[]{CODE, NAME, TYPE},
                 new int[]{R.id.code_text, R.id.name_text, R.id.type});
 
         if (adapter.isEmpty()) {

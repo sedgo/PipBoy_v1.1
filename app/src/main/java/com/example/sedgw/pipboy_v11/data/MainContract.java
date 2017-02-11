@@ -27,4 +27,15 @@ public class MainContract {
         public final static String COLUMN_PATH_TO_SOUND = "path_to_sound";
 
     }
+
+    public static final class SmsEntry implements BaseColumns {
+        public final static String TABLE_NAME = "sms";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_FLAG_INPUT = "flag_input";
+        public final static String COLUMN_NUMBER = "nubmer";
+        public final static String COLUMN_MESSAGE = "message";
+        public final static String COLUMN_TIMESTAMP = "timestamp";
+
+    }
 }

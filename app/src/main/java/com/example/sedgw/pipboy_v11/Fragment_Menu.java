@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 
 import com.example.sedgw.pipboy_v11.admin.AdminMainActivity;
 import com.example.sedgw.pipboy_v11.database.DBfirstActivity;
+import com.example.sedgw.pipboy_v11.sms.SmsActivity;
 
 /**
  * Created by sedgw on 19.01.2017.
@@ -51,6 +52,14 @@ public class Fragment_Menu extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageButton buttonSms = (ImageButton) view.findViewById(R.id.buttonChat);
+        buttonSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SmsActivity.class);
                 startActivity(intent);
             }
         });
