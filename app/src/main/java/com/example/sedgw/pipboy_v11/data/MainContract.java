@@ -33,9 +33,18 @@ public class MainContract {
 
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_FLAG_INPUT = "flag_input";
-        public final static String COLUMN_NUMBER = "nubmer";
+        public final static String COLUMN_NUMBER = "number";
         public final static String COLUMN_MESSAGE = "message";
-        public final static String COLUMN_TIMESTAMP = "timestamp";
+        public final static String COLUMN_TIMESTAMP = "sms_timestamp";
+
+    }
+
+    public static final class ContactEntry implements BaseColumns {
+        public final static String TABLE_NAME = "contact";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_NAME = "name";
+        public final static String COLUMN_NUMBER = "number";
 
     }
 }

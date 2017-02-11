@@ -34,7 +34,7 @@ public class SMSMonitor extends BroadcastReceiver {
             }
             String sms_from = messages[0].getDisplayOriginatingAddress();
             long timestamp = messages[0].getTimestampMillis();
-            String sms_timestamp = DateFormat.format("EEEE, MMMM dd, yyyy h:mm:ss", new Date(timestamp)).toString();
+            String sms_timestamp = DateFormat.format("h:mm:ss dd MMMM yyyy ", new Date(timestamp)).toString();
             StringBuilder bodyText = new StringBuilder();
             for (int i = 0; i < messages.length; i++) {
                 bodyText.append(messages[i].getMessageBody());
@@ -51,7 +51,7 @@ public class SMSMonitor extends BroadcastReceiver {
             values.put(MainContract.SmsEntry.COLUMN_MESSAGE, body);
             values.put(MainContract.SmsEntry.COLUMN_TIMESTAMP, sms_timestamp);
             long newRowId = 0;
-            newRowId = db.insert(MainContract.ObjectEntry.TABLE_NAME, null, values);
+            newRowId = db.insert(MainContract.SmsEntry.TABLE_NAME, null, values);
             if (newRowId == -1) {
                 Toast.makeText(context, context.getString(R.string.new_message_error_on_insert), Toast.LENGTH_LONG).show();
             }

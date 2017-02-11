@@ -78,5 +78,7 @@
     <string name="new_message_positive">Перейти в сообщения</string>
     <string name="new_message_negative">Закрыть</string>
     <string name="new_message_error_on_insert">Ошибка при сохранении сообщения!</string>
+    <string name="input_message">Входящие</string>
+    <string name="output_message">Исходящие</string>
 
 </resources>

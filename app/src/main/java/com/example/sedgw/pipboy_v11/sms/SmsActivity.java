@@ -1,6 +1,7 @@
 package com.example.sedgw.pipboy_v11.sms;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sedgw.pipboy_v11.R;
@@ -32,6 +34,8 @@ public class SmsActivity extends Activity {
     public static final String MESSAGE = "message";
     public static final String TIMESTAMP = "timestamp";
 
+    public Boolean flagInput = true;
+
     public View curView;
 
     @Override
@@ -40,6 +44,9 @@ public class SmsActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sms);
 
+        dbHelper = new ObjectBDHelper(this);
+        listView = (ListView) findViewById(R.id.list_items);
+        objectsArrayList = new ArrayList<HashMap<String, Object>>();
     }
 
     @Override
@@ -51,15 +58,10 @@ public class SmsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        dbHelper = new ObjectBDHelper(this);
-        listView = (ListView) findViewById(R.id.list_items);
-        objectsArrayList = new ArrayList<HashMap<String, Object>>();
-
-        showInputMessages();
+        showMessages(flagInput);
     }
 
-    public ArrayList<HashMap<String, Object>> selectInputSms() {
+    public ArrayList<HashMap<String, Object>> selectInputSms(Boolean flag) {
         ArrayList<HashMap<String, Object>> curArrayList = new ArrayList<HashMap<String, Object>>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         //Array of column and values
@@ -67,7 +69,10 @@ public class SmsActivity extends Activity {
                 SmsEntry.COLUMN_NUMBER,
                 SmsEntry.COLUMN_MESSAGE,
                 SmsEntry.COLUMN_TIMESTAMP};
-        String where_expression = SmsEntry.COLUMN_FLAG_INPUT + " = 1";
+        String flagChange;
+        if (flag) flagChange = " = 1";
+        else flagChange = " = 0";
+        String where_expression = SmsEntry.COLUMN_FLAG_INPUT + flagChange;
         //Execute query
         Cursor cursor = db.query(
                 SmsEntry.TABLE_NAME,
@@ -97,8 +102,8 @@ public class SmsActivity extends Activity {
         return curArrayList;
     }
 
-    public void showInputMessages() {
-        objectsArrayList = selectInputSms();
+    public void showMessages(Boolean flag) {
+        objectsArrayList = selectInputSms(flag);
         SimpleAdapter adapter = new SimpleAdapter(this, objectsArrayList,
                 R.layout.list_item_sms, new String[]{NUMBER, MESSAGE, TIMESTAMP},
                 new int[]{R.id.number_text, R.id.message_text, R.id.timestamp_text});
@@ -108,10 +113,11 @@ public class SmsActivity extends Activity {
             listView.setAdapter(null);
         }
         else listView.setAdapter(adapter);
-        listView.setOnItemClickListener(itemClickListener);
+        //if need to task on click items on listview
+        //listView.setOnItemClickListener(itemClickListener);
     }
 
-    AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+    /* AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             HashMap<String, Object> itemHashMap = (HashMap <String, Object>) parent.getItemAtPosition(position);
@@ -119,9 +125,27 @@ public class SmsActivity extends Activity {
             curView = view;
             view.setBackgroundResource(R.drawable.selected_item);
         }
-    };
+    };*/
 
     public void onClickBack(View view) {
         finish();
+    }
+
+    public void onClickChangeType(View view) {
+        TextView textView = (TextView) findViewById(R.id.text_type);
+        flagInput = !flagInput;
+        if (flagInput) {
+            textView.setText(getString(R.string.input_message));
+            showMessages(true);
+        }
+        else {
+            textView.setText(R.string.output_message);
+            showMessages(false);
+        }
+    }
+
+    public void onClickSend(View view) {
+        Intent intent = new Intent(this, SmsSendActivity.class);
+        startActivity(intent);
     }
 }

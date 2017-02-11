@@ -76,6 +76,10 @@
             android:name=".admin.AdminSettingsActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
+        <activity
+            android:name=".admin.AdminContactActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme" />
 
         <!-- Settings activity -->
         <activity
@@ -98,13 +102,21 @@
             android:name=".sms.SmsActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme" />
+        <activity
+            android:name=".sms.SmsSendActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme" />
         <receiver android:name=".sms.SMSMonitor">
             <intent-filter android:priority="100">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
+
         <!-- alert dialog new message -->
-        <activity android:name=".sms.ServiceDialogNewMessage" android:label="" android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".sms.ServiceDialogNewMessage"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Dialog" />
 
     </application>
 

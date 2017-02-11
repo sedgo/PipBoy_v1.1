@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.sedgw.pipboy_v11.data.MainContract.ObjectEntry;
 import com.example.sedgw.pipboy_v11.data.MainContract.SmsEntry;
+import com.example.sedgw.pipboy_v11.data.MainContract.ContactEntry;
 
 /**
  * Created by nechuhaev on 24.01.2017.
@@ -20,7 +21,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "object.db";
 
     //Version of BD
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     public ObjectBDHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,6 +52,13 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
                 SmsEntry.COLUMN_MESSAGE + " TEXT NOT NULL, " +
                 SmsEntry.COLUMN_TIMESTAMP + " TEXT NOT NULL )";
         db.execSQL(SQL_CREATE_OBJECT_TABLE_SMS);
+
+        //contact
+        String SQL_CREATE_OBJECT_TABLE_CONTACT = "CREATE TABLE " + ContactEntry.TABLE_NAME + " (" +
+                ContactEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ContactEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                ContactEntry.COLUMN_NUMBER + " TEXT NOT NULL )";
+        db.execSQL(SQL_CREATE_OBJECT_TABLE_CONTACT);
     }
 
     @Override
@@ -59,6 +67,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
         Log.w("SQLite", "UPDATE VERSION DB from version " + oldVersion + " to version " + newVersion);
         db.execSQL("DROP TABLE IF EXISTS " + SmsEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ObjectEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ContactEntry.TABLE_NAME);
         onCreate(db);
     }
 }

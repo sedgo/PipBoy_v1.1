@@ -14,5 +14,8 @@
     <dimen name="admin_width_rgroup">90dp</dimen>
     <dimen name="admin_title_button">30dp</dimen>
     <dimen name="settings_button_margin">50dp</dimen>
+    <dimen name="sms_listview_right">90dp</dimen>
+    <dimen name="sms_listview_top">40dp</dimen>
+    <dimen name="height_title_sms">40dp</dimen>
 
 </resources>
