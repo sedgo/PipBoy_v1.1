@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.sedgw.pipboy_v11.R;
 import com.example.sedgw.pipboy_v11.data.MainContract.SmsEntry;
+import com.example.sedgw.pipboy_v11.data.MainContract.ContactEntry;
 import com.example.sedgw.pipboy_v11.data.ObjectBDHelper;
 
 import java.util.ArrayList;
@@ -85,10 +86,30 @@ public class SmsActivity extends Activity {
         );
 
         HashMap<String, Object> hm;
+        String number_str;
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 hm = new HashMap<>();
-                hm.put(NUMBER, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_NUMBER)) );
+                number_str = cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_NUMBER));
+                String[] select_column_for_contact = { ContactEntry.COLUMN_NAME };
+                String where_expression_for_contact = ContactEntry.COLUMN_NUMBER + " = ?";
+                String[] where_args_for_contact = { number_str };
+                //Execute query
+                Cursor cursor_for_contact = db.query(
+                        ContactEntry.TABLE_NAME,
+                        select_column_for_contact,
+                        where_expression_for_contact,
+                        where_args_for_contact,
+                        null,
+                        null,
+                        null);
+                if (cursor_for_contact != null) {
+                    if (cursor_for_contact.moveToNext()) {
+                        number_str = cursor_for_contact.getString(cursor_for_contact.getColumnIndex(ContactEntry.COLUMN_NAME));
+                    }
+                }
+                if (cursor_for_contact != null) cursor_for_contact.close();
+                hm.put(NUMBER, number_str );
                 hm.put(MESSAGE, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_MESSAGE)) );
                 hm.put(TIMESTAMP, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_TIMESTAMP)) );
                 curArrayList.add(hm);
@@ -109,7 +130,7 @@ public class SmsActivity extends Activity {
                 new int[]{R.id.number_text, R.id.message_text, R.id.timestamp_text});
 
         if (adapter.isEmpty()) {
-            Toast.makeText(this, R.string.empty_array_list, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, R.string.empty_array_list, Toast.LENGTH_LONG).show();
             listView.setAdapter(null);
         }
         else listView.setAdapter(adapter);

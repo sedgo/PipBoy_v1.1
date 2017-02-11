@@ -18,7 +18,7 @@ public class AdminMainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_admin_main);
     }
 
@@ -33,6 +33,11 @@ public class AdminMainActivity extends Activity {
 
     public void onClickSettings(View view) {
         Intent intent = new Intent(this, AdminSettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickContacts(View view) {
+        Intent intent = new Intent(this, AdminContactActivity.class);
         startActivity(intent);
     }
 }

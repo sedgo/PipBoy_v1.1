@@ -74,15 +74,9 @@ public class AdminListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_admin_list);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        //openDB
         dbHelper = new ObjectBDHelper(this);
         listView = (ListView) findViewById(R.id.list_items);
         objectsArrayList = new ArrayList<HashMap<String, Object>>();
@@ -94,7 +88,11 @@ public class AdminListActivity extends Activity {
         rbuttonMessage.setOnClickListener(radioButtonClickListener);
         RadioButton rbuttonObject = (RadioButton)findViewById(R.id.rbutton_object);
         rbuttonObject.setOnClickListener(radioButtonClickListener);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         updateListView();
     }
 
@@ -289,7 +287,7 @@ public class AdminListActivity extends Activity {
                 new int[]{R.id.code_text, R.id.name_text, R.id.type});
 
         if (adapter.isEmpty()) {
-            Toast.makeText(this, R.string.empty_array_list, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, R.string.empty_array_list, Toast.LENGTH_LONG).show();
             listView.setAdapter(null);
         }
         else listView.setAdapter(adapter);
@@ -301,9 +299,16 @@ public class AdminListActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             HashMap<String, Object> itemHashMap = (HashMap <String, Object>) parent.getItemAtPosition(position);
             if (curView != null) curView.setBackgroundResource(R.drawable.appfunc_rename);
-            curView = view;
-            view.setBackgroundResource(R.drawable.selected_item);
-            curCodeForView = itemHashMap.get(CODE).toString();
+            if (curView == view) {
+                view.setBackgroundResource(R.drawable.appfunc_rename);
+                curView = null;
+                curCodeForView = "";
+            }
+            else {
+                curView = view;
+                view.setBackgroundResource(R.drawable.selected_item);
+                curCodeForView = itemHashMap.get(CODE).toString();
+            }
         }
     };
 
@@ -327,34 +332,32 @@ public class AdminListActivity extends Activity {
         code = edit_code.getText().toString();
         name = edit_name.getText().toString();
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         if (code.length() != getResources().getInteger(R.integer.length_of_code) ) {
             Toast.makeText(this, R.string.error_lenght_code, Toast.LENGTH_LONG).show();
             return;
         }
-        else {
-            //find this code in DB, if finding - cancel add (not to dublicate!)
-            String[] select_column = { MainContract.ObjectEntry.COLUMN_CODE };
-            String where_expression = MainContract.ObjectEntry.COLUMN_CODE + " = ?";
-            String[] where_args = { code };
-            //Execute query
-            Cursor cursor = db.query(
-                    MainContract.ObjectEntry.TABLE_NAME,
-                    select_column,
-                    where_expression,
-                    where_args,
-                    null,
-                    null,
-                    null
-            );
-            if ( cursor != null && cursor.moveToNext() ) {
-                Toast.makeText(this, R.string.error_lenght_code, Toast.LENGTH_LONG).show();
-                cursor.close();
-                return;
-            }
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        //find this code in DB, if finding - cancel add (not to dublicate!)
+        String[] select_column = { MainContract.ObjectEntry.COLUMN_CODE };
+        String where_expression = MainContract.ObjectEntry.COLUMN_CODE + " = ?";
+        String[] where_args = { code };
+        //Execute query
+        Cursor cursor = db.query(
+                MainContract.ObjectEntry.TABLE_NAME,
+                select_column,
+                where_expression,
+                where_args,
+                null,
+                null,
+                null
+        );
+        if ( cursor != null && cursor.moveToNext() ) {
+            Toast.makeText(this, R.string.error_lenght_code, Toast.LENGTH_LONG).show();
             cursor.close();
+            return;
         }
+        if (cursor != null) cursor.close();
+
         if (name.length() <= 0 ) {
             Toast.makeText(this, R.string.error_name_null, Toast.LENGTH_LONG).show();
             return;

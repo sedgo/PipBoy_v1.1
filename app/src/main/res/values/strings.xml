@@ -26,9 +26,11 @@
     <string name="message_code_not_find">Код не найден</string>
     <string name="message_type_not_find">Ошибка! Такой тип объекта не найден</string>
     <string name="message_not_check_item">Сначала выберите объект из списка!</string>
-    <string name="message_type_not_checked">Не выбран объект!</string>
+    <string name="message_type_not_checked">Не выбран тип объекта!</string>
     <string name="message_error_on_insert">Ошибка при добавление нового элемента!</string>
+    <string name="message_error_on_update">Ошибка при обновлении элемента!</string>
     <string name="message_success_insert">Элемент добавлен!</string>
+    <string name="message_success_update">Элемент обновлён!</string>
 
     <!-- DB first -->
     <string name="back_code">XXXXXXXX</string>
@@ -48,6 +50,11 @@
     <string name="empty_image">Не выбрано изображение!</string>
     <string name="empty_video">Не выбрано видео!</string>
     <string name="empty_audio">Не выбрано аудио!</string>
+
+    <!-- Admin contact -->
+    <string name="admin_incorrect_number">Некорректный номер телефона</string>
+    <string name="admin_contact_name">Имя</string>
+    <string name="admin_contact_number">Номер телефона</string>
 
     <!-- Settings -->
     <string name="settings_check_navigation">Навигация</string>

@@ -38,7 +38,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:background="@null"
-            android:src="@drawable/gocontacts"/>
+            android:src="@drawable/gocontacts"
+            android:onClick="onClickContacts"/>
 
         <ImageButton
             android:layout_width="wrap_content"

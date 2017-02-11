@@ -2,10 +2,12 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_horizontal_margin_big">30dp</dimen>
+    <dimen name="activity_horizontal_margin_for_back_button">38dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin_small">8dp</dimen>
     <dimen name="big_size_text">80sp</dimen>
     <dimen name="medium_size_text">50sp</dimen>
-    <dimen name="small_size_text">25sp</dimen>
+    <dimen name="small_size_text">20sp</dimen>
     <dimen name="activity_admin_main_horizontal_margin">200dp</dimen>
     <dimen name="activity_admin_main_vertical_margin">80dp</dimen>
     <dimen name="admin_horizontal_padding">8dp</dimen>
@@ -15,7 +17,7 @@
     <dimen name="admin_title_button">30dp</dimen>
     <dimen name="settings_button_margin">50dp</dimen>
     <dimen name="sms_listview_right">90dp</dimen>
-    <dimen name="sms_listview_top">40dp</dimen>
-    <dimen name="height_title_sms">40dp</dimen>
+    <dimen name="sms_listview_top">44dp</dimen>
+    <dimen name="height_title_sms">36dp</dimen>
 
 </resources>
