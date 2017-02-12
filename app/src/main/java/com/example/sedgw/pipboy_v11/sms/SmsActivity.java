@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -28,16 +29,21 @@ import java.util.HashMap;
 public class SmsActivity extends Activity {
 
     public ObjectBDHelper dbHelper;
-    public ListView listView;
-    public ArrayList<HashMap<String, Object>> objectsArrayList;
+    public ListView listViewSms;
+    public ArrayList<HashMap<String, Object>> objectsArrayListSms;
+    public ListView listViewContact;
+    public ArrayList<HashMap<String, Object>> objectsArrayListContact;
 
     public static final String NUMBER = "number";
     public static final String MESSAGE = "message";
     public static final String TIMESTAMP = "timestamp";
 
+    public static final String NAME = "name";
+
     public Boolean flagInput = true;
 
     public View curView;
+    public String curNameForView = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +52,10 @@ public class SmsActivity extends Activity {
         setContentView(R.layout.activity_sms);
 
         dbHelper = new ObjectBDHelper(this);
-        listView = (ListView) findViewById(R.id.list_items);
-        objectsArrayList = new ArrayList<HashMap<String, Object>>();
+        listViewSms = (ListView) findViewById(R.id.list_items);
+        objectsArrayListSms = new ArrayList<HashMap<String, Object>>();
+        listViewContact = (ListView) findViewById(R.id.list_contact);
+        objectsArrayListContact = new ArrayList<HashMap<String, Object>>();
     }
 
     @Override
@@ -60,9 +68,10 @@ public class SmsActivity extends Activity {
     protected void onResume() {
         super.onResume();
         showMessages(flagInput);
+        showContacts();
     }
 
-    public ArrayList<HashMap<String, Object>> selectInputSms(Boolean flag) {
+    public ArrayList<HashMap<String, Object>> selectSms(Boolean flag) {
         ArrayList<HashMap<String, Object>> curArrayList = new ArrayList<HashMap<String, Object>>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         //Array of column and values
@@ -89,7 +98,6 @@ public class SmsActivity extends Activity {
         String number_str;
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                hm = new HashMap<>();
                 number_str = cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_NUMBER));
                 String[] select_column_for_contact = { ContactEntry.COLUMN_NAME };
                 String where_expression_for_contact = ContactEntry.COLUMN_NUMBER + " = ?";
@@ -109,10 +117,22 @@ public class SmsActivity extends Activity {
                     }
                 }
                 if (cursor_for_contact != null) cursor_for_contact.close();
-                hm.put(NUMBER, number_str );
-                hm.put(MESSAGE, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_MESSAGE)) );
-                hm.put(TIMESTAMP, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_TIMESTAMP)) );
-                curArrayList.add(hm);
+                if (!curNameForView.equals("")) {
+                    if (number_str.equals(curNameForView)) {
+                        hm = new HashMap<>();
+                        hm.put(NUMBER, number_str);
+                        hm.put(MESSAGE, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_MESSAGE)));
+                        hm.put(TIMESTAMP, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_TIMESTAMP)));
+                        curArrayList.add(hm);
+                    }
+                }
+                else {
+                    hm = new HashMap<>();
+                    hm.put(NUMBER, number_str);
+                    hm.put(MESSAGE, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_MESSAGE)));
+                    hm.put(TIMESTAMP, cursor.getString(cursor.getColumnIndex(SmsEntry.COLUMN_TIMESTAMP)));
+                    curArrayList.add(hm);
+                }
             }
             cursor.close();
         }
@@ -124,16 +144,16 @@ public class SmsActivity extends Activity {
     }
 
     public void showMessages(Boolean flag) {
-        objectsArrayList = selectInputSms(flag);
-        SimpleAdapter adapter = new SimpleAdapter(this, objectsArrayList,
+        objectsArrayListSms = selectSms(flag);
+        SimpleAdapter adapter = new SimpleAdapter(this, objectsArrayListSms,
                 R.layout.list_item_sms, new String[]{NUMBER, MESSAGE, TIMESTAMP},
                 new int[]{R.id.number_text, R.id.message_text, R.id.timestamp_text});
 
         if (adapter.isEmpty()) {
             //Toast.makeText(this, R.string.empty_array_list, Toast.LENGTH_LONG).show();
-            listView.setAdapter(null);
+            listViewSms.setAdapter(null);
         }
-        else listView.setAdapter(adapter);
+        else listViewSms.setAdapter(adapter);
         //if need to task on click items on listview
         //listView.setOnItemClickListener(itemClickListener);
     }
@@ -147,6 +167,71 @@ public class SmsActivity extends Activity {
             view.setBackgroundResource(R.drawable.selected_item);
         }
     };*/
+
+    public ArrayList<HashMap<String, Object>> selectContacts() {
+        ArrayList<HashMap<String, Object>> curArrayList = new ArrayList<HashMap<String, Object>>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        //Array of column and values
+        String[] select_column = { ContactEntry.COLUMN_NAME };
+        //Execute query
+        Cursor cursor = db.query(
+                ContactEntry.TABLE_NAME,
+                select_column,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        HashMap<String, Object> hm;
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                hm = new HashMap<>();
+                hm.put(NAME, cursor.getString(cursor.getColumnIndex(ContactEntry.COLUMN_NAME)) );
+                curArrayList.add(hm);
+            }
+            cursor.close();
+        }
+        else {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.message_error_select), Toast.LENGTH_LONG).show();
+        }
+        db.close();
+        return curArrayList;
+    }
+
+    public void showContacts() {
+        objectsArrayListContact = selectContacts();
+        SimpleAdapter adapter = new SimpleAdapter(this, objectsArrayListContact,
+                R.layout.list_item_contact_without_number, new String[]{ NAME },
+                new int[]{ R.id.name_contact_text });
+
+        if (adapter.isEmpty()) {
+            //Toast.makeText(this, R.string.empty_array_list, Toast.LENGTH_LONG).show();
+            listViewContact.setAdapter(null);
+        }
+        else listViewContact.setAdapter(adapter);
+        listViewContact.setOnItemClickListener(itemClickListener);
+    }
+
+    AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            HashMap<String, Object> itemHashMap = (HashMap<String, Object>) parent.getItemAtPosition(position);
+            if (curView != null) curView.setBackgroundResource(R.drawable.appfunc_rename);
+            if (curView == view) {
+                view.setBackgroundResource(R.drawable.appfunc_rename);
+                curView = null;
+                curNameForView = "";
+                showMessages(flagInput);
+            } else {
+                curView = view;
+                view.setBackgroundResource(R.drawable.selected_item);
+                curNameForView = itemHashMap.get(NAME).toString();
+                showMessages(flagInput);
+            }
+        }
+    };
 
     public void onClickBack(View view) {
         finish();

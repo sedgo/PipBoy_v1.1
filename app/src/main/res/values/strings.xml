@@ -87,5 +87,10 @@
     <string name="new_message_error_on_insert">Ошибка при сохранении сообщения!</string>
     <string name="input_message">Входящие</string>
     <string name="output_message">Исходящие</string>
+    <string name="sms_hint_message">Текст сообщения</string>
+    <string name="error_not_change_contact">Выберите получателя!</string>
+    <string name="success_send_message">Сообщение отправлено!</string>
+    <string name="error_send_message">Сообщение НЕ отправлено!</string>
+    <string name="error_find_number">Ошибка при поиске номера!</string>
 
 </resources>
