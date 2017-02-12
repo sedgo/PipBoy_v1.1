@@ -119,6 +119,15 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Dialog" />
 
+        <!-- radio  -->
+        <activity
+            android:name=".radio.RadioActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme" />
+        <service
+            android:enabled="true"
+            android:name=".radio.RadioService"/>
+
     </application>
 
 </manifest>

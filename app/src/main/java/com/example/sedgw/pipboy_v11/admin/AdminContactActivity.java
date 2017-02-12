@@ -35,7 +35,6 @@ public class AdminContactActivity extends Activity {
     public ListView listView;
     public ArrayList<HashMap<String, Object>> objectsArrayList;
 
-    public static final String ID = "id";
     public static final String NAME = "name";
     public static final String NUMBER = "number";
 

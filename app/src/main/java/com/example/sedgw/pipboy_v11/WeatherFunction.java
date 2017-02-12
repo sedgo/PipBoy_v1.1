@@ -3,6 +3,7 @@ package com.example.sedgw.pipboy_v11;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,9 +17,11 @@ import java.util.Locale;
 
 public class WeatherFunction {
     private static final String OPEN_WEATHER_MAP_URL =
-            "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric&lang=ru";
+            "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric&lang=ru&type=accurate";
 
     private static final String OPEN_WEATHER_MAP_API = "fe2b962f7ab9b168aa28c825027670eb"; //Тут мой api key если чо)
+
+    private static final String GOOGLE_MAPS_URL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&language=ru";
 
     public static String setWeatherIcon(int actualId, long sunrise, long sunset){
         int id = actualId / 100;
@@ -71,8 +74,6 @@ public class WeatherFunction {
             } catch (Exception e) {
                 Log.d("Error", "Cannot process JSON results", e);
             }
-
-
             return jsonWeather;
         }
 
@@ -99,14 +100,10 @@ public class WeatherFunction {
 
                 }
             } catch (JSONException e) {
-                //Log.e(LOG_TAG, "Cannot process JSON results", e);
+
             }
-
-
-
         }
     }
-
 
     public static JSONObject getWeatherJSON(String lat, String lon){
         try {
@@ -138,4 +135,82 @@ public class WeatherFunction {
             return null;
         }
     }
+
+    public interface AsyncResponseCity {
+
+        void processFinish(String output);
+    }
+
+
+    public static class findCity extends AsyncTask<String, Void, JSONObject> {
+
+        public AsyncResponseCity delegate = null;//Call back interface
+
+        public findCity(AsyncResponseCity asyncResponse) {
+            delegate = asyncResponse;//Assigning call back interfacethrough constructor
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+
+            JSONObject jsonCityName = null;
+            try {
+                jsonCityName = getGoogleMapsJSON(params[0], params[1]);
+            } catch (Exception e) {
+                Log.d("Error", "Cannot process JSON results", e);
+            }
+            return jsonCityName;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject json) {
+            try {
+                if(json != null){
+                    String cityName = "";
+                    JSONArray address = json.getJSONArray("results");
+                    for (int i = 0; i < address.length(); i++) {
+                        JSONArray component = address.getJSONObject(i).getJSONArray("types");
+                        if (component.getString(0).equals("administrative_area_level_2") &&
+                                component.getString(1).equals("political")) {
+                            cityName = address.getJSONObject(i).getString("formatted_address");
+                        }
+                    }
+                    delegate.processFinish(cityName);
+
+                }
+                else delegate.processFinish("ERROR: JSON = NULL");
+            } catch (JSONException e) {
+                delegate.processFinish(e.toString());
+            }
+        }
+    }
+
+    public static JSONObject getGoogleMapsJSON(String lat, String lon) {
+        try {
+            URL url = new URL(String.format(GOOGLE_MAPS_URL, lat, lon));
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+
+            StringBuffer json = new StringBuffer(1024);
+            String tmp = "";
+            while((tmp=reader.readLine()) != null)
+                json.append(tmp).append("\n");
+            reader.close();
+
+            JSONObject data = new JSONObject(json.toString());
+
+            // This value will be 404 if the request was not
+            // successful
+            //if(data.getString("status") != "OK"){
+            //    return null;
+            //}
+            return data;
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
 }

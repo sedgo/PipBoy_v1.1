@@ -44,6 +44,7 @@ public class OSMMapsActivity extends Activity implements MapEventsReceiver{
     public LocationManager locationManager;
     public Marker navMarker;
     public Marker selectedMarker;
+    public Boolean flagFollow = false;
 
     public double currentLat = 0;
     public double currentLon = 0;
@@ -131,7 +132,24 @@ public class OSMMapsActivity extends Activity implements MapEventsReceiver{
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000 * 10, 10, locationListener);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000    * 10, 10, locationListener);
         checkEnabled();
-        toLocation();
+        if (getIntent().hasExtra("lat")) {
+            GeoPoint p = new GeoPoint(getIntent().getExtras().getDouble("lat"),
+                    getIntent().getExtras().getDouble("lon"));
+            mapController.animateTo(p);
+            selectedMarker = new Marker(map);
+            selectedMarker.setPosition(p);
+            selectedMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            selectedMarker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.marker_tap, null));
+            selectedMarker.setTitle(getIntent().getExtras().getString("name") + "\r\n" +
+                    Double.toString(p.getLongitude()) + "\r\n" + Double.toString(p.getLatitude()));
+            map.getOverlays().add(selectedMarker);
+            map.invalidate();
+            TextView coord = (TextView) findViewById(R.id.textview_coordinates);
+            coord.setText(getIntent().getExtras().getString("name") + "\r\n" +
+                    Double.toString(p.getLongitude()) + " : " + Double.toString(p.getLatitude()));
+
+        }
+        else toLocation();
     }
 
     @Override
@@ -143,17 +161,11 @@ public class OSMMapsActivity extends Activity implements MapEventsReceiver{
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            showLocation(location);
+            if (flagFollow) showLocation(location);
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            /* if (provider.equals(LocationManager.GPS_PROVIDER)) {
-                tvStatusGPS.setText(getResources().getString(R.string.nav_status) + ": " + String.valueOf(status));
-            }
-            else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
-                tvStatusNet.setText(getResources().getString(R.string.nav_status) + ": " + String.valueOf(status));
-            } */
         }
 
         @Override
@@ -189,7 +201,13 @@ public class OSMMapsActivity extends Activity implements MapEventsReceiver{
     public void toLocation() {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            showLocation(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
+            Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (loc == null) loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (loc == null) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.nav_coordinates_notfind), Toast.LENGTH_LONG).show();
+                return;
+            }
+            showLocation(loc);
         }
         /*else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             showLocation(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
@@ -199,7 +217,7 @@ public class OSMMapsActivity extends Activity implements MapEventsReceiver{
 
     private String formatLocation(Location location) {
         if (location == null) return "";
-        return String.format("%1.4f : %2.4f",
+        return String.format("%1.14f : %2.14f",
                 location.getLatitude(), location.getLongitude());
     }
 
@@ -219,7 +237,19 @@ public class OSMMapsActivity extends Activity implements MapEventsReceiver{
     }
 
     public void onClickLocation(View view) {
-        toLocation();
+        checkEnabled();
+        if (flagFollow) {
+            flagFollow = false;
+            ImageButton but = (ImageButton) findViewById(R.id.status);
+            but.setImageResource(R.drawable.location2);
+        }
+        else {
+            flagFollow = true;
+            ImageButton but = (ImageButton) findViewById(R.id.status);
+            but.setImageResource(R.drawable.anchor);
+            toLocation();
+        }
+
     }
 }
 

@@ -47,4 +47,14 @@ public class MainContract {
         public final static String COLUMN_NUMBER = "number";
 
     }
+
+    public static final class RadioEntry implements BaseColumns {
+        public final static String TABLE_NAME = "radio";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_NAME = "name";
+        public final static String COLUMN_URL = "url";
+
+    }
+
 }

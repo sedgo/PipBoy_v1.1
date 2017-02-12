@@ -179,6 +179,8 @@ public class DBviewActivity extends Activity {
         Intent intent = new Intent(this, OSMMapsActivity.class);
         intent.putExtra("lat", lat);
         intent.putExtra("lon", lon);
+        TextView tv = (TextView) findViewById(R.id.name_text);
+        intent.putExtra("name", tv.getText().toString());
         startActivity(intent);
     }
 

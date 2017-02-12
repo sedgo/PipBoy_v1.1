@@ -1,16 +1,34 @@
 package com.example.sedgw.pipboy_v11;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.graphics.Typeface;
 import android.text.Html;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by sedgw on 08.02.2017.
@@ -20,8 +38,13 @@ public class WeatherActivity extends Activity {
 
     TextView cityField, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField, wind_field;
     Typeface weatherFont;
-    WeatherFunction.placeIdTask asyncTask;
+    WeatherFunction.placeIdTask asyncTaskWeather;
+    WeatherFunction.findCity asyncTaskCityName;
     public LocationManager locationManager;
+
+    //file pf weather
+    public static final String APP_PREFERENCES = "weather_settings";
+    private SharedPreferences weatherSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +65,7 @@ public class WeatherActivity extends Activity {
         weatherIcon = (TextView)findViewById(R.id.weather_icon);
         weatherIcon.setTypeface(weatherFont);
 
-        //asyncTask.execute("52.03", "113.55"); //  asyncTask.execute("Latitude", "Longitude") сюда кароче нужно из гпса долготу широту запилить
-        //asyncTask.execute("55.86", "37.66");
+        weatherSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     }
@@ -51,28 +73,69 @@ public class WeatherActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        //start coordinates update
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000 * 10, 10, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000    * 10, 10, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000 * 10, 10, locationListener);
+
+        if (weatherSettings.contains("weather_city")) {
+            cityField.setText(weatherSettings.getString("weather_city", ""));
+            updatedField.setText(getResources().getString(R.string.weather_update) + " " + weatherSettings.getString("weather_updatedOn", ""));
+            detailsField.setText(weatherSettings.getString("weather_description", ""));
+            currentTemperatureField.setText(weatherSettings.getString("weather_temperature", "") + Html.fromHtml("&#xf03c"));
+            humidity_field.setText(getResources().getString(R.string.weather_humidity) + " " + weatherSettings.getString("weather_humidity", ""));
+            pressure_field.setText(getResources().getString(R.string.weather_pressure) + " " + weatherSettings.getString("weather_pressure", ""));
+            wind_field.setText(getResources().getString(R.string.weather_wind) + " " + weatherSettings.getString("weather_windspeed", ""));
+            weatherIcon.setText(Html.fromHtml(weatherSettings.getString("weather_iconText", "")));
+        }
     }
 
-    public void showWeather() {
-        asyncTask = new WeatherFunction.placeIdTask(new WeatherFunction.AsyncResponse() {
+    public void updateWeather() {
+        asyncTaskWeather = new WeatherFunction.placeIdTask(new WeatherFunction.AsyncResponse() {
             public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise, String weather_windspeed) {
 
-                cityField.setText(weather_city);
-                updatedField.setText(getResources().getString(R.string.weather_update) + weather_updatedOn);
+                //cityField.setText(weather_city);
+                updatedField.setText(getResources().getString(R.string.weather_update) + " " + weather_updatedOn);
                 detailsField.setText(weather_description);
                 currentTemperatureField.setText(weather_temperature + Html.fromHtml("&#xf03c"));
-                humidity_field.setText(getResources().getString(R.string.weather_humidity) + weather_humidity);
-                pressure_field.setText(getResources().getString(R.string.weather_pressure) + weather_pressure);
-                wind_field.setText(getResources().getString(R.string.weather_wind) + weather_windspeed);
+                humidity_field.setText(getResources().getString(R.string.weather_humidity) + " " + weather_humidity);
+                pressure_field.setText(getResources().getString(R.string.weather_pressure) + " " + weather_pressure);
+                wind_field.setText(getResources().getString(R.string.weather_wind) + " " + weather_windspeed);
                 weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+                SharedPreferences.Editor editor = weatherSettings.edit();
+                //editor.putString("weather_city", weather_city);
+                editor.putString("weather_updatedOn", weather_updatedOn);
+                editor.putString("weather_description", weather_description);
+                editor.putString("weather_temperature", weather_temperature);
+                editor.putString("weather_humidity", weather_humidity);
+                editor.putString("weather_pressure", weather_pressure);
+                editor.putString("weather_windspeed", weather_windspeed);
+                editor.putString("weather_iconText", weather_iconText);
+                editor.apply();
+
+                Toast.makeText(getApplicationContext(),R.string.weather_update_success, Toast.LENGTH_LONG).show();
             }
         });
+        asyncTaskCityName = new WeatherFunction.findCity(new WeatherFunction.AsyncResponseCity() {
+            public void processFinish(String output) {
+                cityField.setText(output);
+
+                SharedPreferences.Editor editor = weatherSettings.edit();
+                editor.putString("weather_city", output);
+                editor.apply();
+            }
+        });
+
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-            asyncTask.execute(Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location == null) location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location == null) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.nav_coordinates_notfind), Toast.LENGTH_LONG).show();
+                return;
+            }
+            asyncTaskWeather.execute(Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
+            asyncTaskCityName.execute(Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
         }
         else Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_get_provider), Toast.LENGTH_LONG).show();
     }
@@ -100,6 +163,7 @@ public class WeatherActivity extends Activity {
     }
 
     public void onClickSync(View view) {
-        showWeather();
+        updateWeather();
     }
+
 }

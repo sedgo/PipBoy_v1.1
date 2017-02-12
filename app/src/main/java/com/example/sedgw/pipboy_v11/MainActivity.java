@@ -1,6 +1,8 @@
 package com.example.sedgw.pipboy_v11;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -29,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_main);
+
+        //off flag of radio
+        SharedPreferences radioSettings = getSharedPreferences("radio_settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = radioSettings.edit();
+        editor.putString("status", "stopped");
+        editor.apply();
     }
 
     public void onClickFileDialog(View view) {

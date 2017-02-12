@@ -71,10 +71,13 @@
     <string name="nav_error_sdk">Ошибка! Не совместимо с текущей sdk!</string>
 
     <!-- Weather activity -->
-    <string name="weather_update">Обновлено </string>
-    <string name="weather_humidity">Влажность: </string>
-    <string name="weather_pressure">Атм. давление: </string>
-    <string name="weather_wind">Ветер: </string>
+    <string name="weather_update_success">Данные успешно обновлены!</string>
+    <string name="weather_update">Данные на</string>
+    <string name="weather_humidity">Влажность:</string>
+    <string name="weather_pressure">Атм. давление:</string>
+    <string name="weather_wind">Ветер:</string>
+    <string name="json_error">Ошибка в json</string>
+    <string name="request_http_error">Ошибка http request</string>
 
     <!-- work with Font -->
     <string name="error_set_font_1">Невозможно установить шрифт </string>
@@ -92,5 +95,15 @@
     <string name="success_send_message">Сообщение отправлено!</string>
     <string name="error_send_message">Сообщение НЕ отправлено!</string>
     <string name="error_find_number">Ошибка при поиске номера!</string>
+    
+    <!-- radio -->
+    <string name="error_set_url">Ошибка при запуске станции</string>
+    <string name="error_start_service">Запустить службу не удалось</string>
+    <string name="select_stations">Выберите станцию</string>
+    <string name="add_stations_text">Добавить станцию</string>
+    <string name="radio_hint_name">Имя станции</string>
+    <string name="radio_hint_url">Адрес потока</string>
+    <string name="required_name">Введите имя</string>
+    <string name="required_url">Введите адрес потока</string>
 
 </resources>

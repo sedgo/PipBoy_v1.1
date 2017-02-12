@@ -1,5 +1,6 @@
 package com.example.sedgw.pipboy_v11.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,6 +9,7 @@ import android.util.Log;
 import com.example.sedgw.pipboy_v11.data.MainContract.ObjectEntry;
 import com.example.sedgw.pipboy_v11.data.MainContract.SmsEntry;
 import com.example.sedgw.pipboy_v11.data.MainContract.ContactEntry;
+import com.example.sedgw.pipboy_v11.data.MainContract.RadioEntry;
 
 /**
  * Created by nechuhaev on 24.01.2017.
@@ -21,7 +23,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "object.db";
 
     //Version of BD
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public ObjectBDHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -59,6 +61,19 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
                 ContactEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 ContactEntry.COLUMN_NUMBER + " TEXT NOT NULL )";
         db.execSQL(SQL_CREATE_OBJECT_TABLE_CONTACT);
+
+        //radio
+        String SQL_CREATE_OBJECT_TABLE_RADIO = "CREATE TABLE " + RadioEntry.TABLE_NAME + " (" +
+                RadioEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                RadioEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                RadioEntry.COLUMN_URL + " TEXT NOT NULL )";
+        db.execSQL(SQL_CREATE_OBJECT_TABLE_RADIO);
+
+        //add default djaz radio
+        ContentValues values = new ContentValues();
+        values.put(RadioEntry.COLUMN_NAME, "Джаз");
+        values.put(RadioEntry.COLUMN_URL, "http://east-mp3-128.streamthejazzgroove.com");
+        db.insert(RadioEntry.TABLE_NAME, null, values);
     }
 
     @Override
@@ -68,6 +83,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + SmsEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ObjectEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ContactEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + RadioEntry.TABLE_NAME);
         onCreate(db);
     }
 }

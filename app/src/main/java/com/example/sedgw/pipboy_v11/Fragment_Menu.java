@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.sedgw.pipboy_v11.admin.AdminMainActivity;
 import com.example.sedgw.pipboy_v11.database.DBfirstActivity;
+import com.example.sedgw.pipboy_v11.radio.RadioActivity;
 import com.example.sedgw.pipboy_v11.sms.SmsActivity;
 
 /**
@@ -60,6 +60,14 @@ public class Fragment_Menu extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SmsActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageButton buttonRadio = (ImageButton) view.findViewById(R.id.buttonRadio);
+        buttonRadio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RadioActivity.class);
                 startActivity(intent);
             }
         });
