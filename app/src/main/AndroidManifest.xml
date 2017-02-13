@@ -24,14 +24,14 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name=".MyApp"
+        android:name="com.sedg.pipboy_v11.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AllTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.sedg.pipboy_v11.MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,74 +40,74 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name="com.sedg.pipboy_v11.AboutActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
 
         <!-- Maps activity -->
         <activity
-            android:name=".OSMMapsActivity"
+            android:name="com.sedg.pipboy_v11.OSMMapsActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
 
         <!-- Activity for working with DB -->
         <activity
-            android:name=".database.DBfirstActivity"
+            android:name="com.sedg.pipboy_v11.database.DBfirstActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
         <activity
-            android:name=".database.DBmainActivity"
+            android:name="com.sedg.pipboy_v11.database.DBmainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
         <activity
-            android:name=".database.DBviewActivity"
+            android:name="com.sedg.pipboy_v11.database.DBviewActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
 
         <!-- Activity for admin -->
         <activity
-            android:name=".admin.AdminMainActivity"
+            android:name="com.sedg.pipboy_v11.admin.AdminMainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
         <activity
-            android:name=".admin.AdminListActivity"
+            android:name="com.sedg.pipboy_v11.admin.AdminListActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
         <activity
-            android:name=".admin.AdminSettingsActivity"
+            android:name="com.sedg.pipboy_v11.admin.AdminSettingsActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
         <activity
-            android:name=".admin.AdminContactActivity"
+            android:name="com.sedg.pipboy_v11.admin.AdminContactActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme" />
 
         <!-- Settings activity -->
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.sedg.pipboy_v11.SettingsActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
         <activity
-            android:name=".ActivityCheckNavigation"
+            android:name="com.sedg.pipboy_v11.ActivityCheckNavigation"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
 
         <!-- weather activity -->
         <activity
-            android:name=".WeatherActivity"
+            android:name="com.sedg.pipboy_v11.WeatherActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme" />
 
         <!-- sms activity -->
         <activity
-            android:name=".sms.SmsActivity"
+            android:name="com.sedg.pipboy_v11.sms.SmsActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme" />
         <activity
-            android:name=".sms.SmsSendActivity"
+            android:name="com.sedg.pipboy_v11.sms.SmsSendActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme" />
-        <receiver android:name=".sms.SMSMonitor">
+        <receiver android:name="com.sedg.pipboy_v11.sms.SMSMonitor">
             <intent-filter android:priority="100">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
@@ -115,18 +115,18 @@
 
         <!-- alert dialog new message -->
         <activity
-            android:name=".sms.ServiceDialogNewMessage"
+            android:name="com.sedg.pipboy_v11.sms.ServiceDialogNewMessage"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Dialog" />
 
         <!-- radio  -->
         <activity
-            android:name=".radio.RadioActivity"
+            android:name="com.sedg.pipboy_v11.radio.RadioActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme" />
         <service
             android:enabled="true"
-            android:name=".radio.RadioService"/>
+            android:name="com.sedg.pipboy_v11.radio.RadioService"/>
 
     </application>
 
