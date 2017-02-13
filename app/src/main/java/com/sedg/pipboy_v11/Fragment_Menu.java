@@ -13,6 +13,8 @@ import com.example.sedgw.pipboy_v11.R;
 import com.sedg.pipboy_v11.database.DBfirstActivity;
 import com.sedg.pipboy_v11.radio.RadioActivity;
 import com.sedg.pipboy_v11.sms.SmsActivity;
+import com.sedg.pipboy_v11.timer.TimerActivity;
+import com.sedg.pipboy_v11.weather.WeatherActivity;
 
 /**
  * Created by sedgw on 19.01.2017.
@@ -69,6 +71,14 @@ public class Fragment_Menu extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RadioActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageButton buttonTimer = (ImageButton) view.findViewById(R.id.buttonTimer);
+        buttonTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TimerActivity.class);
                 startActivity(intent);
             }
         });

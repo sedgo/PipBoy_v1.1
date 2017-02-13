@@ -25,7 +25,7 @@ import com.sedg.pipboy_v11.OSMMapsActivity;
 import com.example.sedgw.pipboy_v11.R;
 import com.sedg.pipboy_v11.data.MainContract;
 import com.sedg.pipboy_v11.data.ObjectBDHelper;
-import com.sedg.pipboy_v11.database.DBviewActivity;
+import com.sedg.pipboy_v11.database.DBviewObjectActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,10 +63,12 @@ public class AdminListActivity extends Activity {
     public static final String CODE = "code";
     public static final String NAME = "name";
     public static final String TYPE = "type";
+    public static final String TIMER = "timer";
 
     public static final String TYPE_OBJECT = "object";
     public static final String TYPE_MESSAGE = "message";
     public static final String TYPE_MEDIA = "media";
+    public static final String TYPE_TIMER = "timer";
 
     public String curCodeForView = "";
     public View curView;
@@ -90,6 +92,8 @@ public class AdminListActivity extends Activity {
         rbuttonMessage.setOnClickListener(radioButtonClickListener);
         RadioButton rbuttonObject = (RadioButton)findViewById(R.id.rbutton_object);
         rbuttonObject.setOnClickListener(radioButtonClickListener);
+        RadioButton rbuttonTimer = (RadioButton)findViewById(R.id.rbutton_timer);
+        rbuttonTimer.setOnClickListener(radioButtonClickListener);
     }
 
     @Override
@@ -105,12 +109,39 @@ public class AdminListActivity extends Activity {
             switch (rb.getId()) {
                 case R.id.rbutton_object:
                     type = TYPE_OBJECT;
+                    findViewById(R.id.button_title).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_coor).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_message).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_audio).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_video).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_image).setVisibility(View.VISIBLE);
                     break;
                 case R.id.rbutton_message:
                     type = TYPE_MESSAGE;
+                    findViewById(R.id.button_title).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_coor).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_message).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_audio).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_video).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_image).setVisibility(View.INVISIBLE);
                     break;
                 case R.id.rbutton_media:
                     type = TYPE_MEDIA;
+                    findViewById(R.id.button_title).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_coor).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_message).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_audio).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_video).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_image).setVisibility(View.INVISIBLE);
+                    break;
+                case R.id.rbutton_timer:
+                    type = TYPE_TIMER;
+                    findViewById(R.id.button_title).setVisibility(View.VISIBLE);
+                    findViewById(R.id.button_coor).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_message).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_audio).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_video).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.button_image).setVisibility(View.INVISIBLE);
                     break;
                 default:
                     break;
@@ -263,6 +294,9 @@ public class AdminListActivity extends Activity {
                     case TYPE_MEDIA:
                         icon = R.drawable.menu_feedback;
                         break;
+                    case TYPE_TIMER:
+                        icon = R.drawable.add_time;
+                        break;
                     default:
                         Toast.makeText(getApplicationContext(), R.string.message_type_not_find + ": " +
                                 cursor.getString(cursor.getColumnIndex(MainContract.ObjectEntry.COLUMN_CODE)),
@@ -371,6 +405,7 @@ public class AdminListActivity extends Activity {
         values.put(MainContract.ObjectEntry.COLUMN_CODE, code);
         values.put(MainContract.ObjectEntry.COLUMN_NAME, name);
         values.put(MainContract.ObjectEntry.COLUMN_TYPE, type);
+        values.put(MainContract.ObjectEntry.COLUMN_OPENED, false);
         long newRowId = 0;
         switch (type) {
             case TYPE_OBJECT:
@@ -412,6 +447,17 @@ public class AdminListActivity extends Activity {
                 values.put(MainContract.ObjectEntry.COLUMN_PATH_TO_SOUND, audioProvider.toString());
                 newRowId = db.insert(MainContract.ObjectEntry.TABLE_NAME, null, values);
                 break;
+            case TYPE_TIMER:
+                try {
+                    Integer temp = Integer.parseInt(title);
+                    values.put(MainContract.ObjectEntry.COLUMN_TITLE, title);
+                    newRowId = db.insert(MainContract.ObjectEntry.TABLE_NAME, null, values);
+                }
+                catch (Exception e) {
+                    Toast.makeText(this, R.string.incorrect_integer, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                break;
             default:
                 break;
         }
@@ -431,7 +477,7 @@ public class AdminListActivity extends Activity {
             Toast.makeText(getApplicationContext(), R.string.message_not_check_item, Toast.LENGTH_LONG).show();
             return;
         }
-        Intent intent = new Intent(this, DBviewActivity.class);
+        Intent intent = new Intent(this, DBviewObjectActivity.class);
         intent.putExtra("code", curCodeForView);
         startActivity(intent);
     }

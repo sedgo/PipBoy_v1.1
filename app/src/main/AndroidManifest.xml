@@ -60,7 +60,19 @@
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
         <activity
-            android:name="com.sedg.pipboy_v11.database.DBviewActivity"
+            android:name="com.sedg.pipboy_v11.database.DBviewObjectActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme"/>
+        <activity
+            android:name="com.sedg.pipboy_v11.database.DBviewMediaActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme"/>
+        <activity
+            android:name="com.sedg.pipboy_v11.database.DBviewMessageActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme"/>
+        <activity
+            android:name="com.sedg.pipboy_v11.database.DBviewTimerActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme"/>
 
@@ -94,7 +106,7 @@
 
         <!-- weather activity -->
         <activity
-            android:name="com.sedg.pipboy_v11.WeatherActivity"
+            android:name="com.sedg.pipboy_v11.weather.WeatherActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AllTheme" />
 
@@ -127,6 +139,14 @@
         <service
             android:enabled="true"
             android:name="com.sedg.pipboy_v11.radio.RadioService"/>
+        <!-- timer -->
+        <activity
+            android:name="com.sedg.pipboy_v11.timer.TimerActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AllTheme" />
+        <service
+            android:enabled="true"
+            android:name="com.sedg.pipboy_v11.timer.TimerService"/>
 
     </application>
 

@@ -89,4 +89,13 @@ public class DBfirstActivity extends Activity {
             dbHelper.close();
         }
     }
+
+    public void onClickBack(View view) {
+        finish();
+    }
+
+    public void onClickToList(View view) {
+        Intent intent = new Intent(getApplicationContext(), DBmainActivity.class);
+        startActivity(intent);
+    }
 }

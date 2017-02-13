@@ -41,6 +41,8 @@
 
     <!-- DB view -->
     <string name="error_audio_play">Ошибка при запуске аудиофайла!</string>
+    <string name="timer_add">Вам добавлено время:</string>
+    <string name="timer_second">Вам добавлено время:</string>
 
     <!-- Admin list -->
     <string name="admin_alert_error_reqcode">Ошибка. Неверный request code</string>
@@ -52,6 +54,7 @@
     <string name="empty_image">Не выбрано изображение!</string>
     <string name="empty_video">Не выбрано видео!</string>
     <string name="empty_audio">Не выбрано аудио!</string>
+    <string name="incorrect_integer">Введите целое число!</string>
 
     <!-- Admin contact -->
     <string name="admin_incorrect_number">Некорректный номер телефона</string>
@@ -107,5 +110,9 @@
     <string name="radio_hint_url">Адрес потока</string>
     <string name="required_name">Введите имя</string>
     <string name="required_url">Введите адрес потока</string>
+
+    <!-- timer -->
+    <string name="timer_end_message_text">Время вышло</string>
+    <string name="timer_end_not_sms">Время вышло, но смс не было отправлено!(Ошибка)</string>
 
 </resources>

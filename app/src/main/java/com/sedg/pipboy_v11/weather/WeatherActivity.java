@@ -1,4 +1,4 @@
-package com.sedg.pipboy_v11;
+package com.sedg.pipboy_v11.weather;
 
 import android.app.Activity;
 import android.content.Context;

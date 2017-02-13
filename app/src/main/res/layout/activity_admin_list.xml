@@ -28,22 +28,28 @@
                 <RadioButton
                     android:id="@+id/rbutton_object"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/heigth_radio_button"
                     android:layout_gravity="end"
                     android:drawableLeft="@drawable/menu_expendbar"
                     android:checked="true"/>
                 <RadioButton
                     android:id="@+id/rbutton_message"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/heigth_radio_button"
                     android:layout_gravity="end"
-                    android:drawableLeft="@drawable/menu_wallpaper"/>
+                    android:drawableLeft="@drawable/menu_feedback"/>
                 <RadioButton
                     android:id="@+id/rbutton_media"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/heigth_radio_button"
                     android:layout_gravity="end"
-                    android:drawableLeft="@drawable/menu_feedback"/>
+                    android:drawableLeft="@drawable/menu_wallpaper"/>
+                <RadioButton
+                    android:id="@+id/rbutton_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/heigth_radio_button"
+                    android:layout_gravity="end"
+                    android:drawableLeft="@drawable/add_time"/>
             </RadioGroup>
 
             <EditText

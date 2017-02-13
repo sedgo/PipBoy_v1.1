@@ -1,7 +1,10 @@
 package com.sedg.pipboy_v11.database;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
@@ -22,12 +25,13 @@ import com.sedg.pipboy_v11.OSMMapsActivity;
 import com.example.sedgw.pipboy_v11.R;
 import com.sedg.pipboy_v11.data.MainContract.ObjectEntry;
 import com.sedg.pipboy_v11.data.ObjectBDHelper;
+import com.sedg.pipboy_v11.radio.RadioService;
 
 /**
  * Created by nechuhaev on 26.01.2017.
  */
 
-public class DBviewActivity extends Activity {
+public class DBviewObjectActivity extends Activity {
 
     public MediaPlayer audioPlayer;
     public Double lat = 0d;
@@ -38,7 +42,7 @@ public class DBviewActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        setContentView(R.layout.activity_db_view);
+        setContentView(R.layout.activity_db_view_object);
     }
 
     @Override
@@ -51,6 +55,14 @@ public class DBviewActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        //stop radio playing
+        stopService(new Intent(this, RadioService.class));
+        SharedPreferences radioSettings = getSharedPreferences("radio_settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = radioSettings.edit();
+        editor.putString("status", "stopped");
+        editor.apply();
+
         String cur_code = getIntent().getExtras().getString("code");
         TextView text_code = (TextView) findViewById(R.id.code_text);
         text_code.setText(cur_code);
@@ -119,16 +131,24 @@ public class DBviewActivity extends Activity {
             else {
                 Toast.makeText(this, R.string.message_code_not_find, Toast.LENGTH_LONG).show();
             }
+            cursor.close();
         }
         else {
             Toast.makeText(this, R.string.message_error_select, Toast.LENGTH_LONG).show();
         }
-
-        //closing sql objects
-        cursor.close();
         db.close();
-        dbHelper.close();
 
+        //save to opened list
+        db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ObjectEntry.COLUMN_OPENED, true);
+        db.update(ObjectEntry.TABLE_NAME,
+                values,
+                ObjectEntry.COLUMN_CODE + " = ?",
+                new String[]{ cur_code });
+        db.close();
+
+        dbHelper.close();
     }
 
     public void onClickBack(View view) {

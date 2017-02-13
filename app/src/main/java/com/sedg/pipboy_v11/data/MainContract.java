@@ -25,6 +25,7 @@ public class MainContract {
         public final static String COLUMN_PATH_TO_VIDEO = "path_to_video";
         public final static String COLUMN_PATH_TO_IMAGE = "path_to_image";
         public final static String COLUMN_PATH_TO_SOUND = "path_to_sound";
+        public final static String COLUMN_OPENED = "opened";
 
     }
 
