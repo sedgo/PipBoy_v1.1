@@ -217,7 +217,7 @@ public class OSMMapsActivity extends Activity implements MapEventsReceiver{
 
     private String formatLocation(Location location) {
         if (location == null) return "";
-        return String.format("%1.14f : %2.14f",
+        return String.format("%1.7f : %2.7f",
                 location.getLatitude(), location.getLongitude());
     }
 

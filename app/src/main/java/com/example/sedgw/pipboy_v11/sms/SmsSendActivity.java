@@ -128,7 +128,7 @@ public class SmsSendActivity extends Activity {
         values.put(SmsEntry.COLUMN_NUMBER, number);
         values.put(SmsEntry.COLUMN_MESSAGE, message);
         values.put(SmsEntry.COLUMN_FLAG_INPUT, 0);
-        values.put(SmsEntry.COLUMN_TIMESTAMP, android.text.format.DateFormat.format("h:mm:ss dd MMMM yyyy ", new Date()).toString());
+        values.put(SmsEntry.COLUMN_TIMESTAMP, android.text.format.DateFormat.format("hh:mm:ss dd MMMM yyyy ", new Date()).toString());
         long newRowId = db.insert(SmsEntry.TABLE_NAME, null, values);
         if (newRowId == -1) {
             Toast.makeText(this, R.string.message_error_on_insert, Toast.LENGTH_SHORT).show();

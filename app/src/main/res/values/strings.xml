@@ -13,6 +13,8 @@
 
     <string name="YES">да</string>
     <string name="NO">нет</string>
+    <!-- Main -->
+    <string name="start_text">Готовы?</string>
 
     <!-- Maps -->
     <string name="maps_coordiantes">не найдены координаты</string>

@@ -20,5 +20,6 @@
     <dimen name="sms_listview_right">90dp</dimen>
     <dimen name="sms_listview_top">44dp</dimen>
     <dimen name="height_title_sms">36dp</dimen>
+    <dimen name="start_button_dp">100dp</dimen>
 
 </resources>

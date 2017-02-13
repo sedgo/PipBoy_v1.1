@@ -3,25 +3,19 @@ package com.example.sedgw.pipboy_v11;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
-
-import com.google.android.gms.ads.formats.NativeAd;
 
 import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +26,24 @@ public class MainActivity extends AppCompatActivity {
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_main);
 
+        init();
 
+        //time
+        Timer curTimer = new Timer();
+        final Handler handler = new Handler();
+        final TextView textviewTime = (TextView) findViewById(R.id.time_text);
+        curTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                final String curTime = android.text.format.DateFormat.format("hh:mm", new Date()).toString();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        textviewTime.setText(curTime);
+                    }
+                });
+            }
+        }, 60 - Integer.parseInt(android.text.format.DateFormat.format("ss", new Date()).toString()) , 60L * 1000);
     }
 
     public void init() {
