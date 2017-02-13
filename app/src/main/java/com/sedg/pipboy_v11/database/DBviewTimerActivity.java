@@ -39,10 +39,7 @@ public class DBviewTimerActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_db_view_timer);
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
+
         String cur_code = getIntent().getExtras().getString("code");
         TextView text_code = (TextView) findViewById(R.id.code_text);
         text_code.setText(cur_code);
@@ -75,11 +72,13 @@ public class DBviewTimerActivity extends Activity {
                 text_name.setText(cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_NAME)));
                 text_title.setText(getString(R.string.timer_add) + " " +
                         cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_TITLE)) + " " + getString(R.string.timer_second));
-                SharedPreferences timerSettings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
-                SharedPreferences.Editor timerEditor = timerSettings.edit();
-                timerEditor.putLong("current", timerSettings.getLong("current", 3600000L) +
-                        Long.parseLong( cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_TITLE)) ) * 1000);
-                timerEditor.apply();
+                if (!getIntent().getExtras().containsKey("admin")) {
+                    SharedPreferences timerSettings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor timerEditor = timerSettings.edit();
+                    timerEditor.putLong("current", timerSettings.getLong("current", 3600000L) +
+                            Long.parseLong(cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_TITLE))) * 1000);
+                    timerEditor.apply();
+                }
             }
             else {
                 Toast.makeText(this, R.string.message_code_not_find, Toast.LENGTH_LONG).show();
@@ -91,15 +90,17 @@ public class DBviewTimerActivity extends Activity {
         }
         db.close();
 
-        //save to opened list
-        db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(ObjectEntry.COLUMN_OPENED, true);
-        db.update(ObjectEntry.TABLE_NAME,
-                values,
-                ObjectEntry.COLUMN_CODE + " = ?",
-                new String[]{ cur_code });
-        db.close();
+        //save to opened list if not admin
+        if (!getIntent().getExtras().containsKey("admin")) {
+            db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(ObjectEntry.COLUMN_OPENED, 1);
+            db.update(ObjectEntry.TABLE_NAME,
+                    values,
+                    ObjectEntry.COLUMN_CODE + " = ?",
+                    new String[]{cur_code});
+            db.close();
+        }
 
         dbHelper.close();
     }

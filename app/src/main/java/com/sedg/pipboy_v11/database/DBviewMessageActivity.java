@@ -43,13 +43,6 @@ public class DBviewMessageActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //For a good, release a audioPlayer, but give nullPointerException
-        // if (audioPlayer.equals(null)) audioPlayer.release();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         String cur_code = getIntent().getExtras().getString("code");
@@ -101,15 +94,17 @@ public class DBviewMessageActivity extends Activity {
         }
         db.close();
 
-        //save to opened list
-        db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(ObjectEntry.COLUMN_OPENED, true);
-        db.update(ObjectEntry.TABLE_NAME,
-                values,
-                ObjectEntry.COLUMN_CODE + " = ?",
-                new String[]{ cur_code });
-        db.close();
+        //save to opened list if not admin
+        if (!getIntent().getExtras().containsKey("admin")) {
+            db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(ObjectEntry.COLUMN_OPENED, 1);
+            db.update(ObjectEntry.TABLE_NAME,
+                    values,
+                    ObjectEntry.COLUMN_CODE + " = ?",
+                    new String[]{cur_code});
+            db.close();
+        }
 
         dbHelper.close();
     }

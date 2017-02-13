@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+    <EditText
+        android:id="@+id/code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textVisiblePassword"
+        android:textSize="@dimen/big_size_text"
+        android:textAlignment="center"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:hint="@string/back_code" />
 
-        <EditText
-            android:id="@+id/code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
-            android:textSize="@dimen/big_size_text"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:hint="@string/back_code" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/code"
+        android:textColor="@color/error"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textAlignment="center"
+        android:textSize="@dimen/error_text_size"
+        android:singleLine="false"
+        android:gravity="center"
+        android:background="@drawable/folderopenback"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
-        <ImageButton
-            android:id="@+id/button_OK"
-            android:src="@drawable/gtasks"
-            android:background="@null"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:onClick="onClickOK" />
-        <ImageButton
-            android:id="@+id/button_to_list"
-            android:src="@drawable/gtasks"
-            android:background="@null"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:onClick="onClickToList" />
-
-    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/button_OK"
+        android:src="@drawable/gtasks"
+        android:background="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:onClick="onClickOK" />
+    <ImageButton
+        android:id="@+id/button_to_list"
+        android:src="@drawable/list_of_objects"
+        android:background="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:onClick="onClickToList" />
 
     <Button
         android:id="@+id/button_back"
@@ -56,4 +60,4 @@
         android:layout_centerInParent="true"
         android:onClick="onClickBack"/>
 
-</LinearLayout>
+</RelativeLayout>

@@ -23,7 +23,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "object.db";
 
     //Version of BD
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     public ObjectBDHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,7 +44,7 @@ public class ObjectBDHelper extends SQLiteOpenHelper {
                 ObjectEntry.COLUMN_PATH_TO_VIDEO + " TEXT, " +
                 ObjectEntry.COLUMN_PATH_TO_IMAGE + " TEXT, " +
                 ObjectEntry.COLUMN_PATH_TO_SOUND + " TEXT, " +
-                ObjectEntry.COLUMN_OPENED + " BOOLEAN NOT NULL)";
+                ObjectEntry.COLUMN_OPENED + " INTEGER NOT NULL)";
         db.execSQL(SQL_CREATE_OBJECT_TABLE_OBJECT);
 
         //sms

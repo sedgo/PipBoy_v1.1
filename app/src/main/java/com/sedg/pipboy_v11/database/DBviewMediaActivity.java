@@ -45,6 +45,12 @@ public class DBviewMediaActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        audioPlayer.release();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -96,9 +102,7 @@ public class DBviewMediaActivity extends Activity {
         if (cursor != null) {
             if (cursor.moveToNext()) {
                 TextView text_name = (TextView) findViewById(R.id.name_text);
-                TextView text_title = (TextView) findViewById(R.id.title_text);
                 text_name.setText(cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_NAME)));
-                text_title.setText(cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_TITLE)));
                 VideoView videoView = (VideoView) findViewById(R.id.video_view);
                 videoView.setVideoURI(Uri.parse( cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_PATH_TO_VIDEO)) ));
                 videoView.setMediaController(new MediaController(this));
@@ -125,16 +129,17 @@ public class DBviewMediaActivity extends Activity {
         }
         db.close();
 
-        //save to opened list
-        db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(ObjectEntry.COLUMN_OPENED, true);
-        db.update(ObjectEntry.TABLE_NAME,
-                values,
-                ObjectEntry.COLUMN_CODE + " = ?",
-                new String[]{ cur_code });
-        db.close();
-
+        //save to opened list if not admin
+        if (!getIntent().getExtras().containsKey("admin")) {
+            db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(ObjectEntry.COLUMN_OPENED, 1);
+            db.update(ObjectEntry.TABLE_NAME,
+                    values,
+                    ObjectEntry.COLUMN_CODE + " = ?",
+                    new String[]{cur_code});
+            db.close();
+        }
         dbHelper.close();
     }
 

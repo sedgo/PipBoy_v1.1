@@ -25,7 +25,10 @@ import com.sedg.pipboy_v11.OSMMapsActivity;
 import com.example.sedgw.pipboy_v11.R;
 import com.sedg.pipboy_v11.data.MainContract;
 import com.sedg.pipboy_v11.data.ObjectBDHelper;
+import com.sedg.pipboy_v11.database.DBviewMediaActivity;
+import com.sedg.pipboy_v11.database.DBviewMessageActivity;
 import com.sedg.pipboy_v11.database.DBviewObjectActivity;
+import com.sedg.pipboy_v11.database.DBviewTimerActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +66,6 @@ public class AdminListActivity extends Activity {
     public static final String CODE = "code";
     public static final String NAME = "name";
     public static final String TYPE = "type";
-    public static final String TIMER = "timer";
 
     public static final String TYPE_OBJECT = "object";
     public static final String TYPE_MESSAGE = "message";
@@ -71,6 +73,7 @@ public class AdminListActivity extends Activity {
     public static final String TYPE_TIMER = "timer";
 
     public String curCodeForView = "";
+    public Integer curTypeForView;
     public View curView;
 
 
@@ -289,10 +292,10 @@ public class AdminListActivity extends Activity {
                         icon = R.drawable.menu_expendbar;
                         break;
                     case TYPE_MESSAGE:
-                        icon = R.drawable.menu_wallpaper;
+                        icon = R.drawable.menu_feedback;
                         break;
                     case TYPE_MEDIA:
-                        icon = R.drawable.menu_feedback;
+                        icon = R.drawable.menu_wallpaper;
                         break;
                     case TYPE_TIMER:
                         icon = R.drawable.add_time;
@@ -344,6 +347,7 @@ public class AdminListActivity extends Activity {
                 curView = view;
                 view.setBackgroundResource(R.drawable.selected_item);
                 curCodeForView = itemHashMap.get(CODE).toString();
+                curTypeForView = Integer.parseInt(itemHashMap.get(TYPE).toString());
             }
         }
     };
@@ -405,7 +409,7 @@ public class AdminListActivity extends Activity {
         values.put(MainContract.ObjectEntry.COLUMN_CODE, code);
         values.put(MainContract.ObjectEntry.COLUMN_NAME, name);
         values.put(MainContract.ObjectEntry.COLUMN_TYPE, type);
-        values.put(MainContract.ObjectEntry.COLUMN_OPENED, false);
+        values.put(MainContract.ObjectEntry.COLUMN_OPENED, 0);
         long newRowId = 0;
         switch (type) {
             case TYPE_OBJECT:
@@ -477,8 +481,34 @@ public class AdminListActivity extends Activity {
             Toast.makeText(getApplicationContext(), R.string.message_not_check_item, Toast.LENGTH_LONG).show();
             return;
         }
-        Intent intent = new Intent(this, DBviewObjectActivity.class);
-        intent.putExtra("code", curCodeForView);
-        startActivity(intent);
+        Intent intent;
+        switch (curTypeForView) {
+            case R.drawable.menu_expendbar:
+                intent = new Intent(this, DBviewObjectActivity.class);
+                intent.putExtra("code", curCodeForView);
+                intent.putExtra("admin", true);
+                startActivity(intent);
+                break;
+            case R.drawable.menu_wallpaper:
+                intent = new Intent(this, DBviewMediaActivity.class);
+                intent.putExtra("code", curCodeForView);
+                intent.putExtra("admin", true);
+                startActivity(intent);
+                break;
+            case R.drawable.menu_feedback:
+                intent = new Intent(this, DBviewMessageActivity.class);
+                intent.putExtra("code", curCodeForView);
+                intent.putExtra("admin", true);
+                startActivity(intent);
+                break;
+            case R.drawable.add_time:
+                intent = new Intent(this, DBviewTimerActivity.class);
+                intent.putExtra("code", curCodeForView);
+                intent.putExtra("admin", true);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -23,6 +23,11 @@ import com.sedg.pipboy_v11.data.ObjectBDHelper;
 
 public class DBfirstActivity extends Activity {
 
+    public static final String TYPE_OBJECT = "object";
+    public static final String TYPE_MESSAGE = "message";
+    public static final String TYPE_MEDIA = "media";
+    public static final String TYPE_TIMER = "timer";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +58,7 @@ public class DBfirstActivity extends Activity {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
             //Array of column and values
-            String[] select_column = { ObjectEntry._ID, ObjectEntry.COLUMN_CODE };
+            String[] select_column = { ObjectEntry.COLUMN_CODE, ObjectEntry.COLUMN_TYPE, ObjectEntry.COLUMN_OPENED };
             String where_expression = ObjectEntry.COLUMN_CODE + " = ?";
             String[] where_args = { cur_code };
 
@@ -70,10 +75,39 @@ public class DBfirstActivity extends Activity {
 
             if (cursor != null) {
                 if (cursor.moveToNext()) {
-                    //loading next activity of viewing item
-                    Intent intent = new Intent(DBfirstActivity.this, DBmainActivity.class);
-                    intent.putExtra("code", cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_CODE)));
-                    startActivity(intent);
+                    if (cursor.getInt(cursor.getColumnIndex(ObjectEntry.COLUMN_OPENED)) == 1) {
+                        textView.setText(R.string.message_is_opened);
+                        cursor.close();
+                        db.close();
+                        dbHelper.close();
+                        return;
+                    }
+                    Intent intent;
+                    switch (cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_TYPE))) {
+                        case TYPE_OBJECT:
+                            intent = new Intent(this, DBviewObjectActivity.class);
+                            intent.putExtra("code", cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_CODE)));
+                            startActivity(intent);
+                            break;
+                        case TYPE_MEDIA:
+                            intent = new Intent(this, DBviewMediaActivity.class);
+                            intent.putExtra("code", cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_CODE)));
+                            startActivity(intent);
+                            break;
+                        case TYPE_MESSAGE:
+                            intent = new Intent(this, DBviewMessageActivity.class);
+                            intent.putExtra("code", cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_CODE)));
+                            startActivity(intent);
+                            break;
+                        case TYPE_TIMER:
+                            intent = new Intent(this, DBviewTimerActivity.class);
+                            intent.putExtra("code", cursor.getString(cursor.getColumnIndex(ObjectEntry.COLUMN_CODE)));
+                            startActivity(intent);
+                            break;
+                        default:
+                            textView.setText(R.string.message_type_not_find);
+                            break;
+                    }
                 }
                 else {
                     textView.setText(R.string.message_code_not_find);

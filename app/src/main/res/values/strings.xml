@@ -36,13 +36,18 @@
 
     <!-- DB first -->
     <string name="back_code">XXXXXXXX</string>
-    <string name="message_not_enter_code">Вы не ввели код!</string>
-    <string name="button_text">ОК</string>
+    <string name="message_not_enter_code">Некорректный код</string>
+    <string name="message_not_find_code">Код не найден</string>
+    <string name="message_is_opened">Код уже использован</string>
+
+    <!-- DB main -->
+    <string name="media_text">Проигрыватель</string>
+    <string name="object_text">Объекты</string>
 
     <!-- DB view -->
     <string name="error_audio_play">Ошибка при запуске аудиофайла!</string>
     <string name="timer_add">Вам добавлено время:</string>
-    <string name="timer_second">Вам добавлено время:</string>
+    <string name="timer_second">секунд</string>
 
     <!-- Admin list -->
     <string name="admin_alert_error_reqcode">Ошибка. Неверный request code</string>
