@@ -3,6 +3,7 @@ package com.example.sedgw.pipboy_v11.database;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -40,7 +41,8 @@ public class DBfirstActivity extends Activity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
-        if (editText.length() != getResources().getInteger(R.integer.length_of_code)) {
+        SharedPreferences allSettings = getSharedPreferences("all_settings", Context.MODE_PRIVATE);
+        if (editText.length() != allSettings.getInt("length_of_code", 8)) {
             textView.setText(R.string.message_not_enter_code);
         }
         else {

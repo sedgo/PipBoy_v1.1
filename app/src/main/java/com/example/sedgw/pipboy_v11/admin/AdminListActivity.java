@@ -2,7 +2,9 @@ package com.example.sedgw.pipboy_v11.admin;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -332,7 +334,8 @@ public class AdminListActivity extends Activity {
         code = edit_code.getText().toString();
         name = edit_name.getText().toString();
 
-        if (code.length() != getResources().getInteger(R.integer.length_of_code) ) {
+        SharedPreferences allSettings = getSharedPreferences("all_settings", Context.MODE_PRIVATE);
+        if (code.length() !=  allSettings.getInt("length_of_code", 8)) {
             Toast.makeText(this, R.string.error_lenght_code, Toast.LENGTH_LONG).show();
             return;
         }

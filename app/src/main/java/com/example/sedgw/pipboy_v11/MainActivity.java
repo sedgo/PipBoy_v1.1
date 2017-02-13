@@ -32,52 +32,27 @@ public class MainActivity extends AppCompatActivity {
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_main);
 
+
+    }
+
+    public void init() {
         //off flag of radio
         SharedPreferences radioSettings = getSharedPreferences("radio_settings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = radioSettings.edit();
-        editor.putString("status", "stopped");
-        editor.apply();
-    }
+        SharedPreferences.Editor editorRadio = radioSettings.edit();
+        editorRadio.putString("status", "stopped");
+        editorRadio.apply();
 
-    public void onClickFileDialog(View view) {
-        Intent intent = new Intent()
-                .setType("*/*")
-                .setAction(Intent.ACTION_GET_CONTENT);
-
-        startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 123 && resultCode == RESULT_OK) {
-            Uri selectedFile = data.getData();
-            ImageView image = (ImageView) findViewById(R.id.imageView);
-            //image.getSettings().setLoadWithOverviewMode(true);
-            //image.getSettings().setUseWideViewPort(true);
-            image.setImageURI(selectedFile);
-
-            //image.getSettings().setBuiltInZoomControls(true); //Button of zoom
-            /* suka ne vkuril!
-            int picHeight = image.getContentHeight();
-            int height = image.getHeight();
-            float val = 1;
-            if (picHeight > height)
-                val = (float) height / (float) picHeight / 100f;
-
-            //val = val * 100f;
-            int val_int = (int) val;
-            image.setInitialScale(val_int); */
-            //image.setInitialScale(10);
-
-            image.setScrollbarFadingEnabled(true);
-            image.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-
-
-            TextView textView = (TextView) findViewById(R.id.filePath);
-            textView.setText(selectedFile.toString());
-
+        //Phone of admin default setting
+        SharedPreferences allSettings = getSharedPreferences("all_settings", Context.MODE_PRIVATE);
+        if (!allSettings.contains("admin_number")) {
+            SharedPreferences.Editor editorAll = allSettings.edit();
+            editorAll.putString("admin_number", "89143644279");
+            editorAll.apply();
         }
-
+        if (!allSettings.contains("length_of_code")) {
+            SharedPreferences.Editor editorAll = allSettings.edit();
+            editorAll.putInt("length_of_code", 8);
+            editorAll.apply();
+        }
     }
 }
