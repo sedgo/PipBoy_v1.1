@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
@@ -35,15 +36,26 @@ public class RadioService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        class PlayMusic extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+                try {
+                    mediaPlayer.setDataSource(params[0]);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                }
+                catch (IOException e) {
+                    Toast.makeText(getApplicationContext(), R.string.error_set_url, Toast.LENGTH_LONG).show();
+                }
+                return null;
+            }
+        }
+
         String stream = intent.getExtras().getString("stream");
-        try {
-            mediaPlayer.setDataSource(stream);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        }
-        catch (IOException e) {
-            Toast.makeText(getApplicationContext(), R.string.error_set_url, Toast.LENGTH_LONG).show();
-        }
+        PlayMusic play = new PlayMusic();
+        play.execute(stream);
         return super.onStartCommand(intent, flags, startId);
     }
 

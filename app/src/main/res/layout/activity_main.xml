@@ -16,25 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
-        <Button
-            android:id="@+id/buttonFileDialog"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="2.8"
-            android:onClick="onClickFileDialog" />
-        <TextView
-            android:id="@+id/filePath"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="3"/>
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:background="@android:color/black">
-        </ImageView>
+
     </LinearLayout>
 
     <!-- Bottom Menu -->
@@ -46,26 +28,4 @@
         tools:layout="@layout/fragment_menu">
     </fragment>
 
-    <!-- Button and video -->
-    <!-- <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginTop="26dp"
-        android:id="@+id/imageButton"
-        android:onClick="onClickToAbout" />
-
-    <VideoView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/videoView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginEnd="150dp" /> -->
 </RelativeLayout>
