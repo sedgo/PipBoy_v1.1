@@ -14,7 +14,7 @@
     <string name="YES">да</string>
     <string name="NO">нет</string>
     <!-- Main -->
-    <string name="start_text">Готовы?</string>
+    <string name="enter_start_code_hint">Введите код</string>
 
     <!-- Maps -->
     <string name="maps_coordiantes">не найдены координаты</string>
@@ -70,9 +70,11 @@
     <string name="admin_number_text">Номер телефона администратора</string>
     <string name="admin_number_change">Номер телефона администратора измененён</string>
     <string name="admin_number_bad">Введите корректный номер телефона!</string>
-    <string name="admin_start_timer">Начальное время таймера в секундах</string>
+    <string name="admin_start_timer">Начальное время таймера (сек.)</string>
     <string name="admin_start_timer_change">Начальное время таймера изменено</string>
     <string name="admin_start_timer_bad">Введите корректное значение таймера!</string>
+    <string name="admin_start_code">Код для запуска таймера</string>
+    <string name="admin_start_code_change">Код для запуска таймера изменён</string>
     <string name="admin_timer_sms_text">Отправлять смс, если вышло время на таймере</string>
 
     <!-- Settings -->

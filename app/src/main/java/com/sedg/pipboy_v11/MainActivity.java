@@ -3,12 +3,16 @@ package com.sedg.pipboy_v11;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sedgw.pipboy_v11.R;
 import com.sedg.pipboy_v11.timer.TimerService;
@@ -49,10 +53,21 @@ public class MainActivity extends AppCompatActivity {
 
         //timer
         timerSettings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
+        if (timerSettings.getBoolean("started", false)) {
+            startTimer();
+        }
+    }
+
+    public void startTimer() {
+        EditText editCode = (EditText) findViewById(R.id.edit_code);
+        ImageButton butStart = (ImageButton) findViewById(R.id.start_button);
+        editCode.setVisibility(View.INVISIBLE);
+        butStart.setVisibility(View.INVISIBLE);
         Timer curTimer = new Timer();
         final Handler handlerTimer = new Handler();
         final TextView textviewTimer = (TextView) findViewById(R.id.timer_text);
-        if (timerSettings.getLong("current", 3600000L) == 0) textviewTimer.setText("00:00:00");
+        textviewTimer.setVisibility(View.VISIBLE);
+        if (timerSettings.getLong("current", 3600000L) <= 0) textviewTimer.setText("00:00:00");
         else curTimer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -66,6 +81,22 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }, 0 , 1000);
+    }
+
+
+    public void onClickStart(View view) {
+        EditText editText = (EditText) findViewById(R.id.edit_code);
+        SharedPreferences allSettings = getSharedPreferences("all_settings", Context.MODE_PRIVATE);
+        if (editText.length() != allSettings.getInt("length_of_code", 8) &&
+                 editText.getText().toString() == timerSettings.getString("start_code", "00000000") ) {
+            Toast.makeText(this, R.string.message_not_enter_code, Toast.LENGTH_SHORT).show();
+        } else {
+            SharedPreferences.Editor editStarted = timerSettings.edit();
+            editStarted.putBoolean("started", true);
+            editStarted.apply();
+            startService(new Intent(this, TimerService.class));
+            startTimer();
+        }
     }
 
     public void init() {
@@ -105,9 +136,15 @@ public class MainActivity extends AppCompatActivity {
             editorTimer.putBoolean("send_sms", false);
             editorTimer.apply();
         }
-    }
-
-    public void onClickStart(View view) {
-        startService(new Intent(this, TimerService.class));
+        if (!timerSettings.contains("start_code")) {
+            SharedPreferences.Editor editorTimer = timerSettings.edit();
+            editorTimer.putString("start_code", "00000000");
+            editorTimer.apply();
+        }
+        if (!timerSettings.contains("started")) {
+            SharedPreferences.Editor editorTimer = timerSettings.edit();
+            editorTimer.putBoolean("started", false);
+            editorTimer.apply();
+        }
     }
 }

@@ -18,8 +18,6 @@ import com.example.sedgw.pipboy_v11.R;
 
 public class AdminSettingsActivity extends Activity {
 
-    public SharedPreferences timer_settings;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +25,12 @@ public class AdminSettingsActivity extends Activity {
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_admin_settings);
 
-        SharedPreferences timer_settings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
+
         changeSrc();
     }
 
     public void changeSrc() {
+        SharedPreferences timer_settings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
         ImageButton button_sms = (ImageButton) findViewById(R.id.button_timer_sms_change);
         if (timer_settings.getBoolean("send_sms", false)) {
             button_sms.setImageResource(R.drawable.d_add);
@@ -70,6 +69,7 @@ public class AdminSettingsActivity extends Activity {
     }
 
     public void onClickTimerSmsChange(View view) {
+        SharedPreferences timer_settings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = timer_settings.edit();
         editor.putBoolean("send_sms", !timer_settings.getBoolean("send_sms", false));
         editor.apply();
@@ -81,13 +81,29 @@ public class AdminSettingsActivity extends Activity {
         String str_time = editText.getText().toString();
         try  {
             Long time = Long.parseLong(str_time);
+            SharedPreferences timer_settings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = timer_settings.edit();
-            editor.putLong("start", time);
+            editor.putLong("start", time * 1000);
             editor.apply();
             Toast.makeText(getApplicationContext(), R.string.admin_start_timer_change, Toast.LENGTH_SHORT).show();
         }
         catch (Exception e) {
             Toast.makeText(getApplicationContext(), R.string.admin_start_timer_bad, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onClickCodeChange(View view) {
+        EditText editText = (EditText) findViewById(R.id.start_code);
+        SharedPreferences allSettings = getSharedPreferences("all_settings", Context.MODE_PRIVATE);
+        if (editText.length() != allSettings.getInt("length_of_code", 8)) {
+            Toast.makeText(this, R.string.message_not_enter_code, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            SharedPreferences timer_settings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = timer_settings.edit();
+            editor.putString("start_code", editText.getText().toString());
+            editor.apply();
+            Toast.makeText(getApplicationContext(), R.string.admin_start_code_change, Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -31,10 +31,13 @@ public class TimerActivity extends Activity {
 
         timerSettings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
 
+        final TextView textviewTimer = (TextView) findViewById(R.id.timer_text);
+        if (timerSettings.getLong("current", 3600000L) <= 0) {
+            textviewTimer.setText("00:00:00");
+            return;
+        }
         Timer curTimer = new Timer();
         final Handler handler = new Handler();
-        final TextView textviewTimer = (TextView) findViewById(R.id.timer_text);
-        if (timerSettings.getLong("current", 3600000L) == 0) return;
         curTimer.schedule(new TimerTask() {
             @Override
             public void run() {

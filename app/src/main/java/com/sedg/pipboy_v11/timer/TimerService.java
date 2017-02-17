@@ -37,22 +37,32 @@ public class TimerService extends Service {
     public void onCreate() {
         super.onCreate();
         timerSettings = getSharedPreferences("timer_settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editorStartTime = timerSettings.edit();
+        editorStartTime.putLong("current", timerSettings.getLong("start", 3600000L));
+        editorStartTime.apply();
         timer = new CountDownTimer(20000000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                long current_value = timerSettings.getLong("current", 3600000L) - 1000;
+                long current_value = timerSettings.getLong("current", 3600000L) - 1000L;
                 if (current_value <= 0) {
                     SharedPreferences.Editor editorTimer = timerSettings.edit();
                     editorTimer.putLong("current", 0);
                     editorTimer.apply();
                     //send message
                     try {
-                        SharedPreferences allSettings = getSharedPreferences("all_settings", Context.MODE_PRIVATE);
-                        SmsManager smsManager = SmsManager.getDefault();
-                        PendingIntent sentPI = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("SMS_SENT"), 0);
-                        smsManager.sendTextMessage(allSettings.getString("admin_number", "89143644279"), null,
-                                getString(R.string.timer_end_message_text), sentPI, null);
+                        SharedPreferences timesSettings = getSharedPreferences("times_settings", Context.MODE_PRIVATE);
+                        if (timesSettings.getBoolean("send_sms", false)) {
+                            SharedPreferences allSettings = getSharedPreferences("all_settings", Context.MODE_PRIVATE);
+                            SmsManager smsManager = SmsManager.getDefault();
+                            PendingIntent sentPI = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("SMS_SENT"), 0);
+                            smsManager.sendTextMessage(allSettings.getString("admin_number", "89143644279"), null,
+                                    getString(R.string.timer_end_message_text), sentPI, null);
+                        }
                         Toast.makeText(getApplicationContext(), R.string.timer_end_message_text, Toast.LENGTH_LONG).show();
+                        SharedPreferences.Editor editor = timerSettings.edit();
+                        editor.putBoolean("started", false);
+                        editor.apply();
+                        stopSelf();
                     }
                     catch (Exception e ) {
                         Toast.makeText(getApplicationContext(), R.string.timer_end_not_sms, Toast.LENGTH_LONG).show();
@@ -70,5 +80,14 @@ public class TimerService extends Service {
             }
         };
         timer.start();
+    }
+
+    @Override
+    public void onDestroy() {
+        SharedPreferences timesSettings = getSharedPreferences("times_settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = timerSettings.edit();
+        editor.putBoolean("started", false);
+        editor.apply();
+        super.onDestroy();
     }
 }

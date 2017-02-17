@@ -62,6 +62,9 @@ public class RadioService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mediaPlayer.stop();
+        try {
+            mediaPlayer.stop();
+        }
+        catch (Exception e) {}
     }
 }
