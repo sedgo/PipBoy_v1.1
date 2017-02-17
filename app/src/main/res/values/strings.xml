@@ -66,6 +66,15 @@
     <string name="admin_contact_name">Имя</string>
     <string name="admin_contact_number">Номер телефона</string>
 
+    <!-- Admin settings -->
+    <string name="admin_number_text">Номер телефона администратора</string>
+    <string name="admin_number_change">Номер телефона администратора измененён</string>
+    <string name="admin_number_bad">Введите корректный номер телефона!</string>
+    <string name="admin_start_timer">Начальное время таймера в секундах</string>
+    <string name="admin_start_timer_change">Начальное время таймера изменено</string>
+    <string name="admin_start_timer_bad">Введите корректное значение таймера!</string>
+    <string name="admin_timer_sms_text">Отправлять смс, если вышло время на таймере</string>
+
     <!-- Settings -->
     <string name="settings_check_navigation">Навигация</string>
 

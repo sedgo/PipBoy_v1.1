@@ -100,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
             editorTimer.putLong("current", 3600000L);
             editorTimer.apply();
         }
+        if (!timerSettings.contains("send_sms")) {
+            SharedPreferences.Editor editorTimer = timerSettings.edit();
+            editorTimer.putBoolean("send_sms", false);
+            editorTimer.apply();
+        }
     }
 
     public void onClickStart(View view) {
